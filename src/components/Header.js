@@ -3,10 +3,12 @@ import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import logo from "../assets/images/logo.png";
+import useLogout from "../hooks/useLogout";
 
 function Header() {
   const navigate = useNavigate();
 
+  const { isLoggedIn, handleLogout } = useLogout();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -49,12 +51,16 @@ function Header() {
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/login"
-              className={({ isActive }) => (isActive ? "active" : undefined)}
-            >
-              Login
-            </NavLink>
+            {isLoggedIn ? (
+              <a onClick={handleLogout}>Logout</a>
+            ) : (
+              <NavLink
+                to="/login"
+                className={({ isActive }) => (isActive ? "active" : undefined)}
+              >
+                Login
+              </NavLink>
+            )}
           </li>
         </ul>
       </nav>
