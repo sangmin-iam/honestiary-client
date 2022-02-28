@@ -1,13 +1,13 @@
 const colors = {
   blueGreen: "#23c1c9",
-  orange: "ff6546",
+  orange: "#FF9A62",
   offWhite: "#fcfcfc",
   white: "#fff",
 };
 
 const devices = {
-  mobile: "(max-width: 768px)",
-  laptop: "(max-width: 1024px)",
+  mobile: "768px",
+  laptop: "1200px",
 };
 
 const theme = {
