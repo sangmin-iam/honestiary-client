@@ -18,6 +18,9 @@
   },
   "plugins": ["react", "import", "prettier", "jest"],
   "ignorePatterns": ["node_modules/"],
+  "globals": {
+    "process": true
+  },
   "rules": {
     "prettier/prettier": "error",
     "indent": ["error", 2],
@@ -41,6 +44,6 @@
         "newlines-between": "always"
       }
     ],
-    "no-console": "error"
+    "no-console": "off"
   }
 }

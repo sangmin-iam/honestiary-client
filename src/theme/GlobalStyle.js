@@ -16,6 +16,21 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.5;
   }
 
+  h1 {
+    font-size: 3rem;
+    font-weight: 400;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 400;
+  }
+
+  h3 {
+    font-size: 2rem;
+    font-weight: 400;
+  }
+
   img {
     max-width: 100%;
   }
@@ -26,6 +41,7 @@ const GlobalStyle = createGlobalStyle`
 
   a {
     text-decoration: none;
+    cursor: pointer;
   }
 `;
 
