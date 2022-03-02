@@ -1,11 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+import { EFFECT_MODE, SCRIPT_MODE } from "../constants";
 import StyledButton from "./shared/StyledButton";
 import Voice from "./Voice";
-
-const EFFECT_MODE = "effect";
-const SCRIPT_MODE = "script";
 
 function Write() {
   const [mode, setMode] = useState(EFFECT_MODE);
