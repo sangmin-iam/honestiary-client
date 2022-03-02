@@ -2,11 +2,11 @@ import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-function Modal({ onClick, width, height, children }) {
+function Modal({ onClick, width, height, padding, children }) {
   return ReactDOM.createPortal(
     <>
       <OverlayWrapper onClick={() => onClick((prev) => !prev)} />
-      <ModalWrapper width={width} height={height}>
+      <ModalWrapper width={width} height={height} padding={padding}>
         {children}
       </ModalWrapper>
     </>,
@@ -20,7 +20,7 @@ const ModalWrapper = styled.div`
   z-index: 100;
   top: 50%;
   left: 50%;
-  padding: 30px;
+  padding: ${(props) => props.padding || "30px"};
   width: ${(props) => props.width || "auto"};
   height: ${(props) => props.height || "auto"};
   background-color: #fff;
@@ -41,10 +41,14 @@ const OverlayWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.25);
 `;
 
+Modal.defaultProps = {
+  onClick: () => {},
+};
+
 Modal.propTypes = {
   onClick: PropTypes.func,
-  width: PropTypes.string.isRequired,
-  height: PropTypes.string.isRequired,
+  width: PropTypes.string,
+  height: PropTypes.string,
 };
 
 export default Modal;

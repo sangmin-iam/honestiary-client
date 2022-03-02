@@ -9,6 +9,7 @@ const StyledButton = styled.button`
   color: ${({ primary, theme }) =>
     primary ? theme.colors.white : theme.colors.orange};
   cursor: pointer;
+  box-shadow: 1px 1px 5px 0.5px rgba(0, 0, 0, 0.2);
 `;
 
 export default StyledButton;
