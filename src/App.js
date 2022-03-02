@@ -1,26 +1,26 @@
 import { Routes, Route } from "react-router-dom";
-import styled from "styled-components";
 
 import Header from "./components/Header";
 import Home from "./components/Home";
+import Write from "./components/Write";
 import Login from "./components/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <>
       <Header />
-      <Main>
+      <main>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/write" element={<Write />} />
+          </Route>
           <Route path="/login" element={<Login />} />
         </Routes>
-      </Main>
+      </main>
     </>
   );
 }
-
-const Main = styled.div`
-  background-color: ${({ theme }) => theme.colors.offWhite};
-`;
 
 export default App;

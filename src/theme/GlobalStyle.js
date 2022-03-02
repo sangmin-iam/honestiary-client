@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: "Rambla", sans-serif;
     line-height: 1.5;
+    background-color: ${({ theme }) => theme.colors.offWhite};
   }
 
   h1 {
