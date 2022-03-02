@@ -5,12 +5,13 @@ import { VscCloudUpload } from "react-icons/vsc";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import StyledButton from "./shared/StyledButton";
 import { createDiary } from "../api/axios";
 import recordingStart from "../assets/audios/recordingStart.mp3";
 import recordingStop from "../assets/audios/recordingStop.mp3";
+import { EFFECT_MODE, SCRIPT_MODE } from "../constants";
 import SuccessModal from "./common/SuccessModal";
 import ErrorModal from "./common/ErrorModal";
+import StyledButton from "./shared/StyledButton";
 
 const SUCCESS_MODAL_HEADING = "Great!";
 const SUCCESS_MODAL_MESSAGE = "Your diary is uploaded successfully!";
@@ -41,7 +42,7 @@ function Voice({ mode }) {
     const recognition = new window.SpeechRecognition();
 
     recognition.interimResults = true;
-    recognition.lang = "en-UK";
+    recognition.lang = "en-US";
     recognition.continuous = true;
 
     recognition.onresult = (e) => {
@@ -190,8 +191,10 @@ function Voice({ mode }) {
       )}
       <Container>
         <ContentWrapper>
-          <Canvas ref={canvas} mode={mode === "effect" ? "block" : "none"} />
-          <Script mode={mode === "script" ? "block" : "none"}>{script}</Script>
+          <Canvas ref={canvas} mode={mode === EFFECT_MODE ? "block" : "none"} />
+          <Script mode={mode === SCRIPT_MODE ? "block" : "none"}>
+            {script}
+          </Script>
         </ContentWrapper>
         <ControllerWrapper>
           {isRecording ? (
