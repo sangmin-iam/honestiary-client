@@ -44,7 +44,7 @@ function Header() {
           </li>
           <li>
             <NavLink
-              to="/entries"
+              to="/entries/list"
               className={({ isActive }) => (isActive ? "active" : undefined)}
             >
               Entries
