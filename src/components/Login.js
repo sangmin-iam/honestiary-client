@@ -12,7 +12,7 @@ function Login() {
   const dispatch = useDispatch();
 
   const { status, errorMessage } = useSelector(({ user }) => user);
-  const [isModalOn, setIsModalOn] = useState(true);
+  const [isModalOn, setIsModalOn] = useState(false);
 
   function handleLogin() {
     dispatch(login());

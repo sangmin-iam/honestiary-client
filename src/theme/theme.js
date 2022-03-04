@@ -3,6 +3,7 @@ const colors = {
   orange: "#FF9A62",
   offWhite: "#fcfcfc",
   white: "#fff",
+  gray: "#C4C4C4",
 };
 
 const devices = {

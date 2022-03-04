@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledButton = styled.button`
+const StyledSelect = styled.select`
   padding: ${({ padding }) => padding || "1rem"};
   border: ${({ border }) => border || "none"};
   border-radius: 3px;
@@ -12,4 +12,4 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
-export default StyledButton;
+export default StyledSelect;
