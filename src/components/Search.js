@@ -3,8 +3,9 @@ import DatePicker from "react-datepicker";
 import { AiOutlineSearch } from "react-icons/ai";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { subDays, subMonths, lightFormat } from "date-fns";
+import { addMonths, subDays, subMonths, lightFormat } from "date-fns";
 
+import { DATE_FORMAT, SENTIMENT } from "../constants";
 import StyledButton from "./shared/StyledButton";
 import StyledSelect from "./shared/StyledSelect";
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,7 +17,7 @@ function Search({ setSearchOptions }) {
 
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <DateButton onClick={onClick} ref={ref} primary>
-      {lightFormat(new Date(value), "yyyy-MM-dd")}
+      {lightFormat(new Date(value), DATE_FORMAT.YYYY_MM_DD)}
     </DateButton>
   ));
   CustomInput.displayName = "CustomInput";
@@ -24,8 +25,8 @@ function Search({ setSearchOptions }) {
   function handleSearch() {
     setSearchOptions({
       sentiment,
-      startDate: lightFormat(startDate, "yyyy-MM-dd"),
-      endDate: lightFormat(endDate, "yyyy-MM-dd"),
+      startDate: lightFormat(startDate, DATE_FORMAT.YYYY_MM_DD),
+      endDate: lightFormat(endDate, DATE_FORMAT.YYYY_MM_DD),
     });
   }
 
@@ -48,14 +49,15 @@ function Search({ setSearchOptions }) {
         onChange={(date) => setEndDate(date)}
         customInput={<CustomInput />}
         minDate={startDate}
+        maxDate={addMonths(new Date(startDate), 3)}
       />
       <ScoreButton
         onChange={(e) => setSentiment(e.target.value)}
         value={sentiment}
       >
-        <option value="all">ALL</option>
-        <option value="positive">Positive</option>
-        <option value="negative">Negative</option>
+        <option value={SENTIMENT.ALL}>ALL</option>
+        <option value={SENTIMENT.POSITIVE}>Positive</option>
+        <option value={SENTIMENT.NEGATIVE}>Negative</option>
       </ScoreButton>
       <SearchIconWrapper onClick={handleSearch}>
         <AiOutlineSearch />

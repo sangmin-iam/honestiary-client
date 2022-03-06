@@ -3,15 +3,14 @@ import { subDays, lightFormat } from "date-fns";
 import styled from "styled-components";
 
 import axios from "../config/axios";
-import { DATE_FORMAT, SENTIMENT } from "../constants";
 import noResultImage from "../assets/images/no-result.png";
 import StyledLoadingSpinner from "./shared/StyledLoadingSpinner";
 import ErrorModal from "./common/ErrorModal";
-import Pagination from "./common/Pagination";
-import DiaryListEntry from "./DiaryListEntry";
+import { DATE_FORMAT, SENTIMENT } from "../constants";
 import Search from "./Search";
+import Graph from "./Graph";
 
-function DiaryList() {
+function DiaryGraph() {
   const [diaries, setDiaries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
@@ -21,26 +20,17 @@ function DiaryList() {
     sentiment: SENTIMENT.ALL,
   });
 
-  const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(1);
-
-  useEffect(() => {
-    setIsLoading(true);
-    setDiaries([]);
-  }, [page]);
-
   useEffect(() => {
     (async () => {
       try {
         const { startDate, endDate, sentiment } = searchOptions;
 
         const { data } = await axios.get(
-          `/diaries?startDate=${startDate}&endDate=${endDate}&sentiment=${sentiment}&page=${page}&limit=12`
+          `/diaries?startDate=${startDate}&endDate=${endDate}&sentiment=${sentiment}`
         );
 
-        const { diaries, pages: totalPages } = data.data;
+        const { diaries } = data.data;
 
-        setPages(totalPages);
         setDiaries(diaries);
         setIsLoading(false);
       } catch (err) {
@@ -48,7 +38,7 @@ function DiaryList() {
         setIsLoading(false);
       }
     })();
-  }, [page, searchOptions]);
+  }, [searchOptions]);
 
   return (
     <>
@@ -66,45 +56,17 @@ function DiaryList() {
       {!isLoading && errorMessage && (
         <ErrorModal message={errorMessage} onClick={setErrorMessage} />
       )}
-      <ListWrapper>
-        {diaries.map(({ script, createdAt, _id }) => {
-          return (
-            <DiaryListEntry
-              script={script}
-              createdAt={createdAt}
-              id={_id}
-              key={_id}
-            />
-          );
-        })}
-      </ListWrapper>
-      <Pagination
-        page={page}
-        pages={pages}
-        changePage={setPage}
-        setIsLoading={setIsLoading}
-      />
+      {!isLoading && diaries.length ? (
+        <Graph
+          data={{
+            searchOptions,
+            diaries,
+          }}
+        />
+      ) : null}
     </>
   );
 }
-
-const ListWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, minmax(25rem, 1fr));
-  grid-gap: 3rem;
-  width: 80%;
-  margin: 0 auto;
-  margin-top: 3rem;
-
-  @media only screen and (max-width: ${({ theme }) => theme.devices.laptop}) {
-    grid-template-columns: repeat(3, minmax(20rem, 1fr));
-  }
-
-  @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
-    display: flex;
-    flex-direction: column;
-  }
-`;
 
 const LoadingWrapper = styled.div`
   display: flex;
@@ -121,4 +83,4 @@ const NoResultImageWrapper = styled.div`
   }
 `;
 
-export default DiaryList;
+export default DiaryGraph;
