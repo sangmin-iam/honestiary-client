@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Entries from "./components/Entries";
 import DiaryList from "./components/DiaryList";
+import DiaryGraph from "./components/DiaryGraph";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/write" element={<Write />} />
             <Route path="/entries" element={<Entries />}>
               <Route path="/entries/list" element={<DiaryList />} />
+              <Route path="/entries/graph" element={<DiaryGraph />} />
             </Route>
           </Route>
           <Route path="/login" element={<Login />} />
