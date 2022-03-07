@@ -5,7 +5,7 @@ import { ACCESS_TOKEN } from "../constants";
 
 export const login = createAsyncThunk(
   "user/login",
-  async (dispatch, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await firebaseGoogleLogin();
 
@@ -32,14 +32,15 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      localStorage.removeItem(ACCESS_TOKEN);
-      state.isLoggedIn = false;
-      state.status = null;
       state.user = {
         _id: "",
         email: "",
         name: "",
       };
+      state.status = null;
+      state.isLoggedIn = false;
+      state.errorMessage = "";
+      localStorage.removeItem(ACCESS_TOKEN);
     },
   },
   extraReducers: {
@@ -47,12 +48,14 @@ const userSlice = createSlice({
       state.status = "pending";
     },
     [login.fulfilled]: (state, action) => {
-      state.isLoggedIn = true;
       state.status = "success";
+      state.isLoggedIn = true;
+      state.errorMessage = "";
       state.user = action.payload;
     },
     [login.rejected]: (state, action) => {
       state.status = "failed";
+      state.isLoggedIn = false;
       state.errorMessage = action.payload;
       localStorage.removeItem(ACCESS_TOKEN);
     },
