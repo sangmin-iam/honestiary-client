@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 
 import axios from "../config/axios";
+import { AUTHORIZATION } from "../constants";
 import { logout } from "../features/userSlice";
 
 function useLogout() {
@@ -9,7 +10,7 @@ function useLogout() {
 
   function handleLogout() {
     localStorage.removeItem("persist:root");
-    axios.defaults.headers = null;
+    delete axios.defaults.headers.common[AUTHORIZATION];
     dispatch(logout());
   }
 

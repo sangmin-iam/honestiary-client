@@ -1,7 +1,7 @@
 import { signInWithPopup } from "firebase/auth";
 
 import { auth, googleAuthProvider } from "../config/firebase";
-import { ACCESS_TOKEN } from "../constants/index";
+import { ACCESS_TOKEN, AUTHORIZATION } from "../constants/index";
 import axios from "../config/axios";
 
 export async function firebaseGoogleLogin() {
@@ -17,7 +17,9 @@ export async function firebaseGoogleLogin() {
 
     localStorage.setItem(ACCESS_TOKEN, data.data.accessToken);
 
-    axios.defaults.headers.common[ACCESS_TOKEN] = data.data.accessToken;
+    axios.defaults.headers.common[
+      AUTHORIZATION
+    ] = `Bearer ${data.data.accessToken}`;
 
     return data.data.user;
   } catch (err) {
