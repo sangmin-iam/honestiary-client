@@ -1,13 +1,24 @@
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import styled from "styled-components";
 
+import { DATE_FORMAT } from "../constants";
+
 function DiaryListEntry({ script, createdAt, id }) {
+  const navigate = useNavigate();
+
+  function handleClick() {
+    navigate(`/entries/${id}`);
+  }
+
   return (
-    <Container id={id}>
+    <Container id={id} onClick={handleClick}>
       <ScriptWrapper>{script}</ScriptWrapper>
       <TimeWrapper>{format(new Date(createdAt), "p E")}</TimeWrapper>
-      <DateWrapper>{format(new Date(createdAt), "yyyy-MM-dd")}</DateWrapper>
+      <DateWrapper>
+        {format(new Date(createdAt), DATE_FORMAT.YYYY_MM_DD)}
+      </DateWrapper>
     </Container>
   );
 }

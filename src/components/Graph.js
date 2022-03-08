@@ -10,10 +10,9 @@ const WIDTH = 1500;
 const HEIGHT = 750;
 const CIRCLE_SIZE = 20;
 
-function Graph({ data }) {
+function Graph({ searchOptions, diaries }) {
   const navigate = useNavigate();
   const [currentZoomState, setCurrentZoomState] = useState(null);
-  const { searchOptions, diaries } = data;
 
   const ref = useD3(
     (svg) => {
@@ -49,7 +48,7 @@ function Graph({ data }) {
         .select(".plot-area")
         .attr("clip-path", "url(#graph-area)")
         .selectAll("circle")
-        .data(diaries)
+        .data(diaries, (d) => d._id)
         .enter()
         .append("circle")
         .attr("r", CIRCLE_SIZE)
@@ -88,6 +87,13 @@ function Graph({ data }) {
         .on("mousemove", onMouseMoveCircle)
         .on("mouseleave", onMouseLeaveCircle)
         .on("click", onClickCircle);
+
+      svg
+        .select(".plot-area")
+        .selectAll("circle")
+        .data(diaries, (d) => d._id)
+        .exit()
+        .remove();
 
       const tooltip = d3.select(".tooltip");
 
@@ -196,7 +202,8 @@ const GraphWrapper = styled.div`
 `;
 
 Graph.propTypes = {
-  data: PropTypes.object,
+  diaries: PropTypes.array,
+  searchOptions: PropTypes.object,
 };
 
 export default Graph;

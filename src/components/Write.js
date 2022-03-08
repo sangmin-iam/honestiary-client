@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { EFFECT_MODE, SCRIPT_MODE } from "../constants";
 import StyledButton from "./shared/StyledButton";
-import Voice from "./Voice";
+import WriteVoice from "./WriteVoice";
 
 function Write() {
   const [mode, setMode] = useState(EFFECT_MODE);
@@ -24,7 +24,7 @@ function Write() {
           Script Mode
         </ScriptModeBtn>
       </ModeWrapper>
-      <Voice mode={mode} />
+      <WriteVoice mode={mode} />
     </Container>
   );
 }
