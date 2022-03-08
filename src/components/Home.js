@@ -36,7 +36,15 @@ const Container = styled.section`
 `;
 
 const ParagraphWrapper = styled.div`
-  padding-top: 25rem;
+  padding-top: 25vh;
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    padding-top: 22.5vh;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    padding-top: 17.5vh;
+  }
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
     padding-top: 0;
@@ -48,8 +56,12 @@ const Paragraph = styled.p`
   font-size: 7.5rem;
   text-align: center;
 
-  @media only screen and (max-width: ${({ theme }) => theme.devices.laptop}) {
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
     font-size: 5rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    font-size: 4rem;
   }
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
@@ -64,11 +76,15 @@ const ButtonWrapper = styled.div`
 `;
 
 const Button = styled(StyledButton)`
-  padding: 1.5rem 2rem;
+  padding: 1em 1.5em;
   font-size: 2rem;
 
-  @media only screen and (max-width: ${({ theme }) => theme.devices.laptop}) {
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
     font-size: 1.75rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    font-size: 1.5rem;
   }
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {

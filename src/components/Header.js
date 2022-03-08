@@ -110,15 +110,15 @@ const Container = styled.header`
     flex-direction: column;
     justify-content: space-between;
     position: absolute;
-    top: 3rem;
-    right: 1rem;
-    width: 3rem;
-    height: 2.1rem;
+    top: 4vh;
+    right: 10px;
+    width: 30px;
+    height: 21px;
 
     .bar {
       width: 100%;
       height: 3px;
-      border-radius: 1rem;
+      border-radius: 10px;
       background-color: white;
     }
   }

@@ -96,7 +96,7 @@ const ListWrapper = styled.div`
   margin: 0 auto;
   margin-top: 3rem;
 
-  @media only screen and (max-width: ${({ theme }) => theme.devices.laptop}) {
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
     grid-template-columns: repeat(3, minmax(20rem, 1fr));
   }
 

@@ -4,6 +4,7 @@ import { ACCESS_TOKEN, AUTHORIZATION } from "../constants";
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
+  withCredentials: true,
 });
 
 const token = localStorage.getItem(ACCESS_TOKEN);

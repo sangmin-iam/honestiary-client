@@ -38,3 +38,15 @@ export async function createDiary(formData) {
     throw new Error(err.response.data.message);
   }
 }
+
+export async function getDiary(id) {
+  try {
+    const { data } = await axios.get(`/diaries/${id}`);
+
+    const { diary } = data.data;
+
+    return diary;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}

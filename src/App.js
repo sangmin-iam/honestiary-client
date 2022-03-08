@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Entries from "./components/Entries";
 import DiaryList from "./components/DiaryList";
 import DiaryGraph from "./components/DiaryGraph";
+import DiaryDetail from "./components/DiaryDetail";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route path="/entries/list" element={<DiaryList />} />
               <Route path="/entries/graph" element={<DiaryGraph />} />
             </Route>
+            <Route path="/entries/:diary_id" element={<DiaryDetail />} />
           </Route>
           <Route path="/login" element={<Login />} />
         </Routes>

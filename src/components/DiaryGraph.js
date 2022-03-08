@@ -57,12 +57,7 @@ function DiaryGraph() {
         <ErrorModal message={errorMessage} onClick={setErrorMessage} />
       )}
       {!isLoading && diaries.length ? (
-        <Graph
-          data={{
-            searchOptions,
-            diaries,
-          }}
-        />
+        <Graph searchOptions={searchOptions} diaries={diaries} />
       ) : null}
     </>
   );

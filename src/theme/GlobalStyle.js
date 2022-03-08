@@ -3,6 +3,14 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
   :root {
     font-size: 62.5%;
+
+    @media only screen and (max-width: ${({ theme }) => theme.devices.laptop}){
+      font-size: 56.25%;
+    }
+
+    @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}){
+      font-size: 50%;
+    }
   }
 
   * {
