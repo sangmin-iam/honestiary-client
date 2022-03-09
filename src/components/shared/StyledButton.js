@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const StyledButton = styled.button`
-  padding: ${({ padding }) => padding || "1rem"};
+  padding: ${({ padding }) => padding || "1em"};
   border: ${({ border }) => border || "none"};
   border-radius: 3px;
   background-color: ${({ primary, theme }) =>
