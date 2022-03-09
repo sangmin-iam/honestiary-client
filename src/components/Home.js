@@ -77,7 +77,7 @@ const ButtonWrapper = styled.div`
 
 const Button = styled(StyledButton)`
   padding: 1em 1.5em;
-  font-size: 2rem;
+  font-size: 1.8rem;
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
     font-size: 1.75rem;

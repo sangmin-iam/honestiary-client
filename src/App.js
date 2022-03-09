@@ -9,6 +9,7 @@ import Entries from "./components/Entries";
 import DiaryList from "./components/DiaryList";
 import DiaryGraph from "./components/DiaryGraph";
 import DiaryDetail from "./components/DiaryDetail";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/entries/:diary_id" element={<DiaryDetail />} />
           </Route>
           <Route path="/login" element={<Login />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </main>
     </>
