@@ -1,7 +1,7 @@
 import { signInWithPopup } from "firebase/auth";
 
-import auth, { googleAuthProvider } from "../config/firebase";
 import { ACCESS_TOKEN, AUTHORIZATION } from "../constants/index";
+import auth, { googleAuthProvider } from "../config/firebase";
 import axios from "../config/axios";
 
 export async function firebaseGoogleLogin() {
@@ -23,7 +23,7 @@ export async function firebaseGoogleLogin() {
 
     return data.data.user;
   } catch (err) {
-    throw new Error("Failed to login in");
+    throw new Error(err.response.data.message);
   }
 }
 
