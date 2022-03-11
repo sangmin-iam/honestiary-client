@@ -75,6 +75,7 @@ const Container = styled.header`
   min-height: 10vh;
   box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.5);
   background-color: ${({ theme }) => theme.colors.blueGreen};
+  font-weight: 300;
 
   .logo {
     height: 100%;
@@ -123,8 +124,9 @@ const Container = styled.header`
     }
   }
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
     flex-direction: column;
+    font-size: 2rem;
 
     .logo {
       display: flex;
@@ -145,7 +147,6 @@ const Container = styled.header`
     }
 
     li {
-      font-size: 2rem;
       margin: 0;
       padding: 1rem;
     }

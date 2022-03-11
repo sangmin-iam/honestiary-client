@@ -25,14 +25,15 @@ function Voice({ mode }) {
   const [analyzer, setAnalyzer] = useState();
   const [audioURL, setAudioURL] = useState();
   const [script, setScript] = useState();
+
   const [isRecording, setIsRecording] = useState(false);
   const [isRecorded, setIsRecorded] = useState(false);
 
   const [isUploaded, setIsUploaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const canvas = useRef();
-  const ctx = useRef();
+  const canvasRef = useRef();
+  const canvasContextRef = useRef();
   const recognitionRef = useRef();
 
   function startSpeechRecognition() {
@@ -65,7 +66,7 @@ function Voice({ mode }) {
   async function startRecording() {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     const mediaRecorder = new MediaRecorder(stream);
-
+    new Audio(recordingStart).play();
     startSpeechRecognition();
 
     function draw(stream) {
@@ -79,22 +80,22 @@ function Voice({ mode }) {
       const bufferLength = analyzer.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
 
-      canvas.current.width = 600;
-      canvas.current.height = 300;
+      canvasRef.current.width = 600;
+      canvasRef.current.height = 300;
 
-      const barWidth = canvas.current.width / bufferLength;
+      const barWidth = canvasRef.current.width / bufferLength;
       let barHeight;
       let x = 0;
 
-      ctx.current = canvas.current.getContext("2d");
+      canvasContextRef.current = canvasRef.current.getContext("2d");
 
       function animate() {
         x = 0;
-        ctx.current.clearRect(
+        canvasContextRef.current.clearRect(
           0,
           0,
-          canvas.current?.width,
-          canvas.current?.height
+          canvasRef.current?.width,
+          canvasRef.current?.height
         );
         analyzer.getByteFrequencyData(dataArray);
 
@@ -104,10 +105,10 @@ function Voice({ mode }) {
           const green = i * 2;
           const blue = barHeight / 2;
 
-          ctx.current.fillStyle = `rgb(${red}, ${green}, ${blue})`;
-          ctx.current.fillRect(
+          canvasContextRef.current.fillStyle = `rgb(${red}, ${green}, ${blue})`;
+          canvasContextRef.current.fillRect(
             x,
-            canvas.current.height - barHeight,
+            canvasRef.current.height - barHeight,
             barWidth,
             barHeight
           );
@@ -123,8 +124,6 @@ function Voice({ mode }) {
     }
 
     draw(stream);
-
-    new Audio(recordingStart).play();
 
     mediaRecorder.start();
 
@@ -191,7 +190,10 @@ function Voice({ mode }) {
       )}
       <Container>
         <ContentWrapper>
-          <Canvas ref={canvas} mode={mode === EFFECT_MODE ? "block" : "none"} />
+          <Canvas
+            ref={canvasRef}
+            mode={mode === EFFECT_MODE ? "block" : "none"}
+          />
           <Script mode={mode === SCRIPT_MODE ? "block" : "none"}>
             {script}
           </Script>
