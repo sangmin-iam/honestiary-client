@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { FaPlay, FaPause } from "react-icons/fa";
 import PropTypes from "prop-types";
 import styled from "styled-components";
@@ -12,6 +12,12 @@ function CustomAudioController({ audioElementRef, src, onStart, onStop }) {
 
   const progressBarRef = useRef();
   const animationRef = useRef();
+
+  useEffect(() => {
+    return () => {
+      cancelAnimationFrame(animationRef.current);
+    };
+  }, [animationRef.current]);
 
   function togglePlayPause() {
     setIsPlaying((prev) => !prev);
