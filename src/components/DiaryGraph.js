@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { subDays, lightFormat } from "date-fns";
 import styled from "styled-components";
 
-import axios from "../config/axios";
 import noResultImage from "../assets/images/no-result.png";
+import { getDiaries } from "../api/axios";
 import StyledLoadingSpinner from "./shared/StyledLoadingSpinner";
 import ErrorModal from "./common/ErrorModal";
 import { DATE_FORMAT, SENTIMENT } from "../constants";
@@ -25,11 +25,13 @@ function DiaryGraph() {
       try {
         const { startDate, endDate, sentiment } = searchOptions;
 
-        const { data } = await axios.get(
-          `/diaries?startDate=${startDate}&endDate=${endDate}&sentiment=${sentiment}`
-        );
+        const params = {
+          startDate,
+          endDate,
+          sentiment,
+        };
 
-        const { diaries } = data.data;
+        const { diaries } = await getDiaries(params);
 
         setDiaries(diaries);
         setIsLoading(false);

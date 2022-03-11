@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { subDays, lightFormat } from "date-fns";
 import styled from "styled-components";
 
-import axios from "../config/axios";
+import { getDiaries } from "../api/axios";
 import { DATE_FORMAT, SENTIMENT } from "../constants";
 import noResultImage from "../assets/images/no-result.png";
 import StyledLoadingSpinner from "./shared/StyledLoadingSpinner";
@@ -34,11 +34,15 @@ function DiaryList() {
       try {
         const { startDate, endDate, sentiment } = searchOptions;
 
-        const { data } = await axios.get(
-          `/diaries?startDate=${startDate}&endDate=${endDate}&sentiment=${sentiment}&page=${page}&limit=12`
-        );
+        const params = {
+          startDate,
+          endDate,
+          sentiment,
+          page,
+          limit: 12,
+        };
 
-        const { diaries, pages: totalPages } = data.data;
+        const { diaries, pages: totalPages } = await getDiaries(params);
 
         setPages(totalPages);
         setDiaries(diaries);
@@ -74,6 +78,8 @@ function DiaryList() {
               createdAt={createdAt}
               id={_id}
               key={_id}
+              setDiaries={setDiaries}
+              setErrorMessage={setErrorMessage}
             />
           );
         })}

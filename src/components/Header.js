@@ -124,6 +124,16 @@ const Container = styled.header`
     }
   }
 
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    ul {
+      font-size: 2rem;
+    }
+
+    li {
+      margin-right: 7rem;
+    }
+  }
+
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
     flex-direction: column;
     font-size: 2rem;
