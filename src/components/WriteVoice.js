@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CgPlayStopO, CgRecord } from "react-icons/cg";
 import { VscCloudUpload } from "react-icons/vsc";
@@ -16,14 +16,11 @@ import StyledButton from "./shared/StyledButton";
 const SUCCESS_MODAL_HEADING = "Great!";
 const SUCCESS_MODAL_MESSAGE = "Your diary is uploaded successfully!";
 
+const RECORDING_TIME_LIMIT = 5 * 60 * 1000;
+
 function Voice({ mode }) {
   const navigate = useNavigate();
 
-  const [myStream, setMyStream] = useState();
-  const [media, setMedia] = useState();
-  const [source, setSource] = useState();
-  const [analyzer, setAnalyzer] = useState();
-  const [audioURL, setAudioURL] = useState();
   const [script, setScript] = useState();
 
   const [isRecording, setIsRecording] = useState(false);
@@ -32,9 +29,61 @@ function Voice({ mode }) {
   const [isUploaded, setIsUploaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const canvasRef = useRef();
-  const canvasContextRef = useRef();
-  const recognitionRef = useRef();
+  const canvasRef = useRef(null);
+  const canvasContextRef = useRef(null);
+
+  const streamRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
+  const sourceRef = useRef(null);
+  const analyzerRef = useRef(null);
+  const audioURLRef = useRef(null);
+  const recognitionRef = useRef(null);
+  const animationFrameRef = useRef(null);
+  const timeLimitRef = useRef(null);
+
+  const componentWillUnmount = useRef(false);
+
+  useEffect(() => {
+    return () => {
+      componentWillUnmount.current = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (!componentWillUnmount.current) {
+        return;
+      }
+
+      if (mediaRecorderRef?.current?.state !== "inactive") {
+        mediaRecorderRef?.current?.stop();
+      }
+
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => {
+          track.stop();
+        });
+      }
+
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+
+      if (timeLimitRef.current) {
+        clearTimeout(timeLimitRef.current);
+      }
+    };
+  }, [
+    streamRef.current,
+    mediaRecorderRef.current,
+    recognitionRef.current,
+    animationFrameRef.current,
+    timeLimitRef.current,
+  ]);
 
   function startSpeechRecognition() {
     window.SpeechRecognition =
@@ -46,6 +95,8 @@ function Voice({ mode }) {
     recognition.lang = "en-US";
     recognition.continuous = true;
 
+    recognition.start();
+
     recognition.onresult = (e) => {
       const transcript = Array.from(e.results)
         .map((result) => result[0])
@@ -56,7 +107,6 @@ function Voice({ mode }) {
     };
 
     recognitionRef.current = recognition;
-    recognition.start();
   }
 
   function stopSpeechRecognition() {
@@ -66,13 +116,15 @@ function Voice({ mode }) {
   async function startRecording() {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     const mediaRecorder = new MediaRecorder(stream);
+
     new Audio(recordingStart).play();
     startSpeechRecognition();
 
     function draw(stream) {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const source = audioCtx.createMediaStreamSource(stream);
-      const analyzer = audioCtx.createAnalyser();
+      const audioContext = new (window.AudioContext ||
+        window.webkitAudioContext)();
+      const source = audioContext.createMediaStreamSource(stream);
+      const analyzer = audioContext.createAnalyser();
       analyzer.fftSize = 256;
 
       source.connect(analyzer);
@@ -80,8 +132,8 @@ function Voice({ mode }) {
       const bufferLength = analyzer.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
 
-      canvasRef.current.width = 600;
-      canvasRef.current.height = 300;
+      canvasRef.current.width = 800;
+      canvasRef.current.height = 400;
 
       const barWidth = canvasRef.current.width / bufferLength;
       let barHeight;
@@ -91,12 +143,7 @@ function Voice({ mode }) {
 
       function animate() {
         x = 0;
-        canvasContextRef.current.clearRect(
-          0,
-          0,
-          canvasRef.current?.width,
-          canvasRef.current?.height
-        );
+        clearCanvas();
         analyzer.getByteFrequencyData(dataArray);
 
         for (let i = 0; i < bufferLength; i++) {
@@ -114,47 +161,64 @@ function Voice({ mode }) {
           );
           x += barWidth;
         }
-        requestAnimationFrame(animate);
+
+        animationFrameRef.current = requestAnimationFrame(animate);
       }
 
       animate();
 
-      setAnalyzer(analyzer);
-      setSource(source);
+      sourceRef.current = source;
+      analyzerRef.current = analyzer;
     }
 
     draw(stream);
 
     mediaRecorder.start();
 
-    setMedia(mediaRecorder);
-    setMyStream(stream);
+    streamRef.current = stream;
+    mediaRecorderRef.current = mediaRecorder;
+
+    timeLimitRef.current = setTimeout(stopRecording, RECORDING_TIME_LIMIT);
+
     setIsRecording(true);
     setIsRecorded(false);
   }
 
+  function clearCanvas() {
+    canvasContextRef.current.clearRect(
+      0,
+      0,
+      canvasRef.current?.width,
+      canvasRef.current?.height
+    );
+  }
+
   function stopRecording() {
-    media.ondataavailable = (e) => {
-      setAudioURL(e.data);
+    mediaRecorderRef.current.ondataavailable = (e) => {
+      audioURLRef.current = e.data;
     };
 
-    myStream.getAudioTracks().forEach((track) => {
+    streamRef.current.getAudioTracks().forEach((track) => {
       track.stop();
     });
 
     new Audio(recordingStop).play();
 
-    source.disconnect();
-    analyzer.disconnect();
-    media.stop();
+    clearCanvas();
+    cancelAnimationFrame(animationFrameRef.current);
+
+    stopSpeechRecognition();
+    sourceRef.current.disconnect();
+    analyzerRef.current.disconnect();
+    mediaRecorderRef.current.stop();
+
     setIsRecorded(true);
     setIsRecording(false);
-    stopSpeechRecognition();
   }
 
   async function saveRecording() {
     try {
-      const recorded = new File([audioURL], "mpeg", {
+      const recorded = new File([audioURLRef.current], "mpeg", {
         lastModified: new Date().getTime(),
         type: "audio/mpeg",
       });
@@ -165,7 +229,9 @@ function Voice({ mode }) {
       formData.append("audio", recorded);
 
       await createDiary(formData);
+
       setIsUploaded(true);
+      clearTimeout(timeLimitRef.current);
     } catch (err) {
       setErrorMessage(err.message);
     }
