@@ -7,16 +7,18 @@ import ErrorModal from "./common/ErrorModal";
 import CustomAudioController from "./CustomAudioController";
 
 function DiaryDetailAudio({ mode, diary }) {
-  const [script, setScript] = useState();
+  const [script, setScript] = useState("");
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  const canvas = useRef();
-  const audioElementRef = useRef();
-  const audioContextRef = useRef();
-  const audioSourceRef = useRef();
-  const audioAnalyzerRef = useRef();
-  const ctx = useRef();
+  const canvasRef = useRef(null);
+  const canvasContextRef = useRef(null);
+  const animationFrameRef = useRef(null);
+
+  const audioElementRef = useRef(null);
+  const audioContextRef = useRef(null);
+  const audioSourceRef = useRef(null);
+  const audioAnalyzerRef = useRef(null);
 
   useEffect(() => {
     if (mode === SCRIPT_MODE) {
@@ -30,47 +32,46 @@ function DiaryDetailAudio({ mode, diary }) {
     }
 
     audioElementRef.current.src = diary?.audio;
-  }, [audioElementRef.current, diary]);
+
+    return () => {
+      cancelAnimationFrame(animationFrameRef.current);
+    };
+  }, [audioElementRef.current, diary, animationFrameRef.current]);
 
   function startPlayingAudio() {
     const audio = audioElementRef.current;
 
-    const audioCtx =
+    const audioContext =
       audioContextRef.current ||
       new (window.AudioContext || window.webkitAudioContext)();
 
-    audioContextRef.current && audioCtx.resume();
+    audioContextRef.current && audioContext.resume();
 
     const source =
-      audioSourceRef.current || audioCtx.createMediaElementSource(audio);
+      audioSourceRef.current || audioContext.createMediaElementSource(audio);
 
-    const analyzer = audioAnalyzerRef.current || audioCtx.createAnalyser();
+    const analyzer = audioAnalyzerRef.current || audioContext.createAnalyser();
 
     analyzer.fftSize = 256;
 
     source.connect(analyzer);
-    analyzer.connect(audioCtx.destination);
+    analyzer.connect(audioContext.destination);
 
     const bufferLength = analyzer.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
 
-    canvas.current.width = 600;
-    canvas.current.height = 300;
+    canvasRef.current.width = 600;
+    canvasRef.current.height = 300;
 
-    const barWidth = canvas.current.width / bufferLength;
+    const barWidth = canvasRef.current.width / bufferLength;
     let barHeight;
     let x = 0;
 
-    ctx.current = canvas.current.getContext("2d");
+    canvasContextRef.current = canvasRef.current.getContext("2d");
 
     function animate() {
       x = 0;
-      ctx.current.clearRect(
-        0,
-        0,
-        canvas.current?.width,
-        canvas.current?.height
-      );
+      clearCanvas();
       analyzer.getByteFrequencyData(dataArray);
 
       for (let i = 0; i < bufferLength; i++) {
@@ -79,26 +80,38 @@ function DiaryDetailAudio({ mode, diary }) {
         const green = i * 2;
         const blue = barHeight / 2;
 
-        ctx.current.fillStyle = `rgb(${red}, ${green}, ${blue})`;
-        ctx.current.fillRect(
+        canvasContextRef.current.fillStyle = `rgb(${red}, ${green}, ${blue})`;
+        canvasContextRef.current.fillRect(
           x,
-          canvas.current.height - barHeight,
+          canvasRef.current.height - barHeight,
           barWidth,
           barHeight
         );
         x += barWidth;
       }
-      requestAnimationFrame(animate);
+
+      animationFrameRef.current = requestAnimationFrame(animate);
     }
 
     animate();
 
-    audioContextRef.current = audioCtx;
+    audioContextRef.current = audioContext;
     audioAnalyzerRef.current = analyzer;
     audioSourceRef.current = source;
   }
 
+  function clearCanvas() {
+    canvasContextRef?.current.clearRect(
+      0,
+      0,
+      canvasRef?.current.width,
+      canvasRef?.current.height
+    );
+  }
+
   function stopPlayingAudio() {
+    clearCanvas();
+    cancelAnimationFrame(animationFrameRef.current);
     audioContextRef.current.suspend();
     audioSourceRef.current.disconnect();
     audioAnalyzerRef.current.disconnect();
@@ -111,7 +124,10 @@ function DiaryDetailAudio({ mode, diary }) {
       )}
       <Container>
         <ContentWrapper>
-          <Canvas ref={canvas} mode={mode === EFFECT_MODE ? "block" : "none"} />
+          <Canvas
+            ref={canvasRef}
+            mode={mode === EFFECT_MODE ? "block" : "none"}
+          />
           <Script mode={mode === SCRIPT_MODE ? "block" : "none"}>
             {script}
           </Script>
