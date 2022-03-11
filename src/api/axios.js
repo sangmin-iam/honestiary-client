@@ -39,6 +39,18 @@ export async function createDiary(formData) {
   }
 }
 
+export async function getDiaries(params) {
+  try {
+    const { data } = await axios.get("/diaries", {
+      params,
+    });
+
+    return data.data;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+
 export async function getDiary(id) {
   try {
     const { data } = await axios.get(`/diaries/${id}`);
@@ -46,6 +58,18 @@ export async function getDiary(id) {
     const { diary } = data.data;
 
     return diary;
+  } catch (err) {
+    throw new Error(err.response.data.message);
+  }
+}
+
+export async function deleteDiary(id) {
+  try {
+    const { data } = await axios.delete(`/diaries/${id}`);
+
+    const { result } = data;
+
+    return result;
   } catch (err) {
     throw new Error(err.response.data.message);
   }

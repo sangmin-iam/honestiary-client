@@ -5,6 +5,7 @@ const colors = {
   orangeLight: "#ff9a6266",
   white: "#fff",
   gray: "#c4c4c4",
+  lightGray: "#dcdcdc",
 };
 
 const devices = {
