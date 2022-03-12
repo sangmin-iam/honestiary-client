@@ -12,6 +12,7 @@ import { EFFECT_MODE, SCRIPT_MODE } from "../../constants";
 import SuccessModal from "../common/SuccessModal";
 import ErrorModal from "../common/ErrorModal";
 import StyledButton from "../shared/StyledButton";
+import useSpeechRecognition from "./useSpeechRecognition";
 
 const SUCCESS_MODAL_HEADING = "Great!";
 const SUCCESS_MODAL_MESSAGE = "Your diary is uploaded successfully!";
@@ -21,7 +22,8 @@ const RECORDING_TIME_LIMIT = 60 * 60 * 1000;
 function Voice({ mode }) {
   const navigate = useNavigate();
 
-  const [script, setScript] = useState();
+  const { script, startSpeechRecognition, stopSpeechRecognition } =
+    useSpeechRecognition();
 
   const [isRecording, setIsRecording] = useState(false);
   const [isRecorded, setIsRecorded] = useState(false);
@@ -37,7 +39,6 @@ function Voice({ mode }) {
   const sourceRef = useRef(null);
   const analyzerRef = useRef(null);
   const audioURLRef = useRef(null);
-  const recognitionRef = useRef(null);
   const animationFrameRef = useRef(null);
   const timeLimitRef = useRef(null);
 
@@ -65,10 +66,6 @@ function Voice({ mode }) {
         });
       }
 
-      if (recognitionRef.current) {
-        recognitionRef.current.stop();
-      }
-
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
@@ -80,38 +77,9 @@ function Voice({ mode }) {
   }, [
     streamRef.current,
     mediaRecorderRef.current,
-    recognitionRef.current,
     animationFrameRef.current,
     timeLimitRef.current,
   ]);
-
-  function startSpeechRecognition() {
-    window.SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    const recognition = new window.SpeechRecognition();
-
-    recognition.interimResults = true;
-    recognition.lang = "en-US";
-    recognition.continuous = true;
-
-    recognition.start();
-
-    recognition.onresult = (e) => {
-      const transcript = Array.from(e.results)
-        .map((result) => result[0])
-        .map((result) => result.transcript)
-        .join("");
-
-      setScript(transcript);
-    };
-
-    recognitionRef.current = recognition;
-  }
-
-  function stopSpeechRecognition() {
-    recognitionRef.current.stop();
-  }
 
   async function startRecording() {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
