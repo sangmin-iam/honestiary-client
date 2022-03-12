@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import * as d3 from "d3";
 
-import useD3 from "../hooks/useD3";
+import useD3 from "../../hooks/useD3";
 
 const WIDTH = 1500;
 const HEIGHT = 750;

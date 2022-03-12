@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 import { format } from "date-fns";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import { deleteDiary } from "../api/axios";
-import { DATE_FORMAT } from "../constants";
-import DeleteModal from "./common/DeleteModal";
-import StyledButton from "./shared/StyledButton";
+import { deleteDiary } from "../../api/axios";
+import { DATE_FORMAT } from "../../constants";
+import DeleteModal from "../common/DeleteModal";
+import StyledButton from "../shared/StyledButton";
 
 const HEADING = "Your are about to delete a diary";
 const MESSAGE = "Are you sure you want to delete it?";

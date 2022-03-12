@@ -1,6 +1,6 @@
+import { RiDeleteBin5Line } from "react-icons/ri";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { RiDeleteBin5Line } from "react-icons/ri";
 
 import Modal from "./Modal";
 

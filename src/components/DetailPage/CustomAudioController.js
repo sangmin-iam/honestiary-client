@@ -3,7 +3,7 @@ import { FaPlay, FaPause } from "react-icons/fa";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import { convertSecondsToMinutesSeconds } from "../utils";
+import { convertSecondsToMinutesSeconds } from "../../utils";
 
 function CustomAudioController({ audioElementRef, src, onStart, onStop }) {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -13,8 +13,20 @@ function CustomAudioController({ audioElementRef, src, onStart, onStop }) {
   const progressBarRef = useRef();
   const animationRef = useRef();
 
+  const componentWillUnmount = useRef(false);
+
   useEffect(() => {
     return () => {
+      componentWillUnmount.current = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (!componentWillUnmount.current) {
+        return;
+      }
+
       cancelAnimationFrame(animationRef.current);
     };
   }, [animationRef.current]);
@@ -135,8 +147,8 @@ const ProgressBarWrapper = styled.div`
   #progress-bar {
     --bar-bg: #ffe3d4;
     --seek-before-width: 0px;
-    --seek-before-color: ${({ theme }) => theme.colors.orange};
-    --knobby: ${({ theme }) => theme.colors.white};
+    --seek-before-color: "#ff9a62";
+    --knobby: "#fff";
     --selectedKnobby: #26c9c3;
 
     position: relative;

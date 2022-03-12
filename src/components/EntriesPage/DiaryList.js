@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { subDays, lightFormat } from "date-fns";
 import styled from "styled-components";
 
-import { getDiaries } from "../api/axios";
-import { DATE_FORMAT, SENTIMENT } from "../constants";
-import noResultImage from "../assets/images/no-result.png";
-import StyledLoadingSpinner from "./shared/StyledLoadingSpinner";
-import ErrorModal from "./common/ErrorModal";
-import Pagination from "./common/Pagination";
+import noResultImage from "../../assets/images/noResult.png";
+import { getDiaries } from "../../api/axios";
+import { DATE_FORMAT, SENTIMENT } from "../../constants";
+import StyledLoadingSpinner from "../shared/StyledLoadingSpinner";
+import ErrorModal from "../common/ErrorModal";
+import Pagination from "./Pagination";
 import DiaryListEntry from "./DiaryListEntry";
-import Search from "./Search";
+import DiarySearch from "./DiarySearch";
 
 function DiaryList() {
   const [diaries, setDiaries] = useState([]);
@@ -56,7 +56,7 @@ function DiaryList() {
 
   return (
     <>
-      <Search setSearchOptions={setSearchOptions} />
+      <DiarySearch setSearchOptions={setSearchOptions} />
       {isLoading && (
         <LoadingWrapper>
           <StyledLoadingSpinner />

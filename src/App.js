@@ -1,15 +1,15 @@
 import { Routes, Route } from "react-router-dom";
 
+import Write from "./components/WritePage/Write";
+import Entries from "./components/EntriesPage/Entries";
+import DiaryList from "./components/EntriesPage/DiaryList";
+import DiaryGraph from "./components/EntriesPage/DiaryGraph";
+import DiaryDetail from "./components/DetailPage/DiaryDetail";
+import ProtectedRoute from "./components/ProtectedRoute";
+import NotFound from "./components/NotFound";
+import Login from "./components/Login";
 import Header from "./components/Header";
 import Home from "./components/Home";
-import Write from "./components/Write";
-import Login from "./components/Login";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Entries from "./components/Entries";
-import DiaryList from "./components/DiaryList";
-import DiaryGraph from "./components/DiaryGraph";
-import DiaryDetail from "./components/DiaryDetail";
-import NotFound from "./components/NotFound";
 
 function App() {
   return (

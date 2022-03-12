@@ -20,11 +20,11 @@ const ModalWrapper = styled.div`
   z-index: 100;
   top: 50%;
   left: 50%;
-  padding: ${(props) => props.padding || "30px"};
   width: ${(props) => props.width || "auto"};
   height: ${(props) => props.height || "auto"};
-  background-color: #fff;
+  padding: ${(props) => props.padding || "30px"};
   border-radius: 10px;
+  background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.5);
   transform: translate(-50%, -50%);
   font-size: 1.7rem;

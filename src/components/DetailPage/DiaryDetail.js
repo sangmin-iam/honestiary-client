@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import { EFFECT_MODE, SCRIPT_MODE } from "../constants";
-import ErrorModal from "./common/ErrorModal";
-import StyledButton from "./shared/StyledButton";
-import { getDiary } from "../api/axios";
+import { getDiary } from "../../api/axios";
+import { EFFECT_MODE, SCRIPT_MODE } from "../../constants";
+import StyledButton from "../shared/StyledButton";
+import ErrorModal from "../common/ErrorModal";
 import DiaryDetailAudio from "./DiaryDetailAudio";
 
 function DiaryDetail() {
