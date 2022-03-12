@@ -1,23 +1,20 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CgPlayStopO, CgRecord } from "react-icons/cg";
 import { VscCloudUpload } from "react-icons/vsc";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import recordingStart from "../../assets/audios/recordingStart.mp3";
-import recordingStop from "../../assets/audios/recordingStop.mp3";
-import { createDiary } from "../../api/axios";
 import { EFFECT_MODE, SCRIPT_MODE } from "../../constants";
 import SuccessModal from "../common/SuccessModal";
 import ErrorModal from "../common/ErrorModal";
 import StyledButton from "../shared/StyledButton";
 import useSpeechRecognition from "./useSpeechRecognition";
+import useVoiceRecording from "./useVoiceRecording";
+import useVoiceVisualization from "./useVoiceVisualization";
 
 const SUCCESS_MODAL_HEADING = "Great!";
 const SUCCESS_MODAL_MESSAGE = "Your diary is uploaded successfully!";
-
-const RECORDING_TIME_LIMIT = 60 * 60 * 1000;
 
 function Voice({ mode }) {
   const navigate = useNavigate();
@@ -25,181 +22,38 @@ function Voice({ mode }) {
   const { script, startSpeechRecognition, stopSpeechRecognition } =
     useSpeechRecognition();
 
-  const [isRecording, setIsRecording] = useState(false);
-  const [isRecorded, setIsRecorded] = useState(false);
+  const {
+    isRecording,
+    isRecorded,
+    isUploaded,
+    startRecording,
+    stopRecording,
+    uploadRecording,
+  } = useVoiceRecording({ script });
 
-  const [isUploaded, setIsUploaded] = useState(false);
+  const { canvasRef, startDrawing, stopDrawing } = useVoiceVisualization();
+
   const [errorMessage, setErrorMessage] = useState("");
 
-  const canvasRef = useRef(null);
-  const canvasContextRef = useRef(null);
-
-  const streamRef = useRef(null);
-  const mediaRecorderRef = useRef(null);
-  const sourceRef = useRef(null);
-  const analyzerRef = useRef(null);
-  const audioURLRef = useRef(null);
-  const animationFrameRef = useRef(null);
-  const timeLimitRef = useRef(null);
-
-  const componentWillUnmount = useRef(false);
-
-  useEffect(() => {
-    return () => {
-      componentWillUnmount.current = true;
-    };
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      if (!componentWillUnmount.current) {
-        return;
-      }
-
-      if (mediaRecorderRef?.current?.state !== "inactive") {
-        mediaRecorderRef?.current?.stop();
-      }
-
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((track) => {
-          track.stop();
-        });
-      }
-
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-
-      if (timeLimitRef.current) {
-        clearTimeout(timeLimitRef.current);
-      }
-    };
-  }, [
-    streamRef.current,
-    mediaRecorderRef.current,
-    animationFrameRef.current,
-    timeLimitRef.current,
-  ]);
-
-  async function startRecording() {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const mediaRecorder = new MediaRecorder(stream);
-
-    new Audio(recordingStart).play();
-    startSpeechRecognition();
-
-    function draw(stream) {
-      const audioContext = new (window.AudioContext ||
-        window.webkitAudioContext)();
-      const source = audioContext.createMediaStreamSource(stream);
-      const analyzer = audioContext.createAnalyser();
-      analyzer.fftSize = 256;
-
-      source.connect(analyzer);
-
-      const bufferLength = analyzer.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
-
-      canvasRef.current.width = 800;
-      canvasRef.current.height = 400;
-
-      const barWidth = canvasRef.current.width / bufferLength;
-      let barHeight;
-      let x = 0;
-
-      canvasContextRef.current = canvasRef.current.getContext("2d");
-
-      function animate() {
-        x = 0;
-        clearCanvas();
-        analyzer.getByteFrequencyData(dataArray);
-
-        for (let i = 0; i < bufferLength; i++) {
-          barHeight = dataArray[i];
-          const red = (i * barHeight) / 20;
-          const green = i * 2;
-          const blue = barHeight / 2;
-
-          canvasContextRef.current.fillStyle = `rgb(${red}, ${green}, ${blue})`;
-          canvasContextRef.current.fillRect(
-            x,
-            canvasRef.current.height - barHeight,
-            barWidth,
-            barHeight
-          );
-          x += barWidth;
-        }
-
-        animationFrameRef.current = requestAnimationFrame(animate);
-      }
-
-      animate();
-
-      sourceRef.current = source;
-      analyzerRef.current = analyzer;
-    }
-
-    draw(stream);
-
-    mediaRecorder.start();
-
-    streamRef.current = stream;
-    mediaRecorderRef.current = mediaRecorder;
-
-    timeLimitRef.current = setTimeout(stopRecording, RECORDING_TIME_LIMIT);
-
-    setIsRecording(true);
-    setIsRecorded(false);
-  }
-
-  function clearCanvas() {
-    canvasContextRef.current.clearRect(
-      0,
-      0,
-      canvasRef.current?.width,
-      canvasRef.current?.height
-    );
-  }
-
-  function stopRecording() {
-    mediaRecorderRef.current.ondataavailable = (e) => {
-      audioURLRef.current = e.data;
-    };
-
-    streamRef.current.getAudioTracks().forEach((track) => {
-      track.stop();
-    });
-
-    new Audio(recordingStop).play();
-
-    clearCanvas();
-    cancelAnimationFrame(animationFrameRef.current);
-
-    stopSpeechRecognition();
-    sourceRef.current.disconnect();
-    analyzerRef.current.disconnect();
-    mediaRecorderRef.current.stop();
-
-    setIsRecorded(true);
-    setIsRecording(false);
-  }
-
-  async function saveRecording() {
+  async function handleStart() {
     try {
-      const recorded = new File([audioURLRef.current], "mpeg", {
-        lastModified: new Date().getTime(),
-        type: "audio/mpeg",
-      });
+      const stream = await startRecording();
+      startDrawing(stream);
+      startSpeechRecognition();
+    } catch (err) {
+      setErrorMessage(err.message);
+    }
+  }
 
-      const formData = new FormData();
+  function handleStop() {
+    stopRecording();
+    stopDrawing();
+    stopSpeechRecognition();
+  }
 
-      formData.append("script", script);
-      formData.append("audio", recorded);
-
-      await createDiary(formData);
-
-      setIsUploaded(true);
-      clearTimeout(timeLimitRef.current);
+  async function handleUpload() {
+    try {
+      await uploadRecording();
     } catch (err) {
       setErrorMessage(err.message);
     }
@@ -234,12 +88,12 @@ function Voice({ mode }) {
         </ContentWrapper>
         <ControllerWrapper>
           {isRecording ? (
-            <CgPlayStopO className="stop-icon" onClick={stopRecording} />
+            <CgPlayStopO className="stop-icon" onClick={handleStop} />
           ) : (
-            <CgRecord className="start-icon" onClick={startRecording} />
+            <CgRecord className="start-icon" onClick={handleStart} />
           )}
           {isRecorded && (
-            <VscCloudUpload className="save-icon" onClick={saveRecording} />
+            <VscCloudUpload className="save-icon" onClick={handleUpload} />
           )}
         </ControllerWrapper>
       </Container>

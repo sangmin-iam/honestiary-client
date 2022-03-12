@@ -20,6 +20,7 @@ function Search({ setSearchOptions }) {
       {lightFormat(new Date(value), DATE_FORMAT.YYYY_MM_DD)}
     </DateButton>
   ));
+
   CustomInput.displayName = "CustomInput";
 
   function handleSearch() {
