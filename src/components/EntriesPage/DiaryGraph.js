@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { subDays, lightFormat } from "date-fns";
 import styled from "styled-components";
 
-import noResultImage from "../assets/images/no-result.png";
-import { getDiaries } from "../api/axios";
-import StyledLoadingSpinner from "./shared/StyledLoadingSpinner";
-import ErrorModal from "./common/ErrorModal";
-import { DATE_FORMAT, SENTIMENT } from "../constants";
-import Search from "./Search";
+import noResultImage from "../../assets/images/noResult.png";
+import { getDiaries } from "../../api/axios";
+import { DATE_FORMAT, SENTIMENT } from "../../constants";
+import StyledLoadingSpinner from "../shared/StyledLoadingSpinner";
+import ErrorModal from "../common/ErrorModal";
+import DiarySearch from "./DiarySearch";
 import Graph from "./Graph";
 
 function DiaryGraph() {
@@ -44,7 +44,7 @@ function DiaryGraph() {
 
   return (
     <>
-      <Search setSearchOptions={setSearchOptions} />
+      <DiarySearch setSearchOptions={setSearchOptions} />
       {isLoading && (
         <LoadingWrapper>
           <StyledLoadingSpinner />

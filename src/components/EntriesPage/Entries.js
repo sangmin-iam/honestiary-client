@@ -1,6 +1,6 @@
-import { TiChartLineOutline } from "react-icons/ti";
-import { AiOutlineUnorderedList } from "react-icons/ai";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { AiOutlineUnorderedList } from "react-icons/ai";
+import { TiChartLineOutline } from "react-icons/ti";
 import styled from "styled-components";
 
 function Entries() {

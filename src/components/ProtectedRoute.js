@@ -1,10 +1,10 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
 import { RiErrorWarningLine } from "react-icons/ri";
+import styled from "styled-components";
 
-import Modal from "./common/Modal";
 import StyledButton from "./shared/StyledButton";
+import Modal from "./common/Modal";
 
 function ProtectedRoute() {
   const navigate = useNavigate();

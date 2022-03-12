@@ -5,18 +5,18 @@ import { VscCloudUpload } from "react-icons/vsc";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import { createDiary } from "../api/axios";
-import recordingStart from "../assets/audios/recordingStart.mp3";
-import recordingStop from "../assets/audios/recordingStop.mp3";
-import { EFFECT_MODE, SCRIPT_MODE } from "../constants";
-import SuccessModal from "./common/SuccessModal";
-import ErrorModal from "./common/ErrorModal";
-import StyledButton from "./shared/StyledButton";
+import recordingStart from "../../assets/audios/recordingStart.mp3";
+import recordingStop from "../../assets/audios/recordingStop.mp3";
+import { createDiary } from "../../api/axios";
+import { EFFECT_MODE, SCRIPT_MODE } from "../../constants";
+import SuccessModal from "../common/SuccessModal";
+import ErrorModal from "../common/ErrorModal";
+import StyledButton from "../shared/StyledButton";
 
 const SUCCESS_MODAL_HEADING = "Great!";
 const SUCCESS_MODAL_MESSAGE = "Your diary is uploaded successfully!";
 
-const RECORDING_TIME_LIMIT = 5 * 60 * 1000;
+const RECORDING_TIME_LIMIT = 60 * 60 * 1000;
 
 function Voice({ mode }) {
   const navigate = useNavigate();
