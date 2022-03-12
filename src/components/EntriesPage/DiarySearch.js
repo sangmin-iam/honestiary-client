@@ -1,19 +1,24 @@
 import { forwardRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import { AiOutlineSearch } from "react-icons/ai";
-import { addMonths, subDays, subMonths, lightFormat } from "date-fns";
+import { addMonths, subMonths, lightFormat } from "date-fns";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
+import { search } from "../../features/diarySlice";
 import { DATE_FORMAT, SENTIMENT } from "../../constants";
 import StyledButton from "../shared/StyledButton";
 import StyledSelect from "../shared/StyledSelect";
 import "react-datepicker/dist/react-datepicker.css";
 
-function Search({ setSearchOptions }) {
-  const [sentiment, setSentiment] = useState("all");
-  const [startDate, setStartDate] = useState(subDays(new Date(), 14));
-  const [endDate, setEndDate] = useState(new Date());
+function DiarySearch() {
+  const dispatch = useDispatch();
+  const searchOptions = useSelector(({ diary }) => diary.searchOptions);
+
+  const [sentiment, setSentiment] = useState(searchOptions.sentiment);
+  const [startDate, setStartDate] = useState(new Date(searchOptions.startDate));
+  const [endDate, setEndDate] = useState(new Date(searchOptions.endDate));
 
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <DateButton onClick={onClick} ref={ref} primary>
@@ -24,11 +29,16 @@ function Search({ setSearchOptions }) {
   CustomInput.displayName = "CustomInput";
 
   function handleSearch() {
-    setSearchOptions({
-      sentiment,
-      startDate: lightFormat(startDate, DATE_FORMAT.YYYY_MM_DD),
-      endDate: lightFormat(endDate, DATE_FORMAT.YYYY_MM_DD),
-    });
+    const formattedStartDate = lightFormat(startDate, DATE_FORMAT.YYYY_MM_DD);
+    const formattedEndDate = lightFormat(endDate, DATE_FORMAT.YYYY_MM_DD);
+
+    dispatch(
+      search({
+        sentiment,
+        startDate: formattedStartDate,
+        endDate: formattedEndDate,
+      })
+    );
   }
 
   return (
@@ -116,10 +126,9 @@ const SearchIconWrapper = styled.div`
   }
 `;
 
-Search.propTypes = {
-  setSearchOptions: PropTypes.func,
+DiarySearch.propTypes = {
   onClick: PropTypes.func,
   value: PropTypes.string,
 };
 
-export default Search;
+export default DiarySearch;

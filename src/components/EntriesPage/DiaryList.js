@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { subDays, lightFormat } from "date-fns";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import noResultImage from "../../assets/images/noResult.png";
 import { getDiaries } from "../../api/axios";
-import { DATE_FORMAT, SENTIMENT } from "../../constants";
 import StyledLoadingSpinner from "../shared/StyledLoadingSpinner";
 import ErrorModal from "../common/ErrorModal";
 import Pagination from "./Pagination";
@@ -12,14 +11,11 @@ import DiaryListEntry from "./DiaryListEntry";
 import DiarySearch from "./DiarySearch";
 
 function DiaryList() {
+  const searchOptions = useSelector(({ diary }) => diary.searchOptions);
+
   const [diaries, setDiaries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
-  const [searchOptions, setSearchOptions] = useState({
-    startDate: lightFormat(subDays(new Date(), 14), DATE_FORMAT.YYYY_MM_DD),
-    endDate: lightFormat(new Date(), DATE_FORMAT.YYYY_MM_DD),
-    sentiment: SENTIMENT.ALL,
-  });
 
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
@@ -56,7 +52,7 @@ function DiaryList() {
 
   return (
     <>
-      <DiarySearch setSearchOptions={setSearchOptions} />
+      <DiarySearch />
       {isLoading && (
         <LoadingWrapper>
           <StyledLoadingSpinner />
