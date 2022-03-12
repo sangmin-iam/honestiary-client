@@ -147,8 +147,8 @@ const ProgressBarWrapper = styled.div`
   #progress-bar {
     --bar-bg: #ffe3d4;
     --seek-before-width: 0px;
-    --seek-before-color: "#ff9a62";
-    --knobby: "#fff";
+    --seek-before-color: #ff9a62;
+    --knobby: #fff;
     --selectedKnobby: #26c9c3;
 
     position: relative;
