@@ -10,6 +10,10 @@ const StyledButton = styled.button`
     primary ? theme.colors.white : theme.colors.orange};
   box-shadow: 1px 1px 5px 0.5px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+
+  &:hover {
+    filter: brightness(98%);
+  }
 `;
 
 export default StyledButton;

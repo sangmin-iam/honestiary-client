@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { getDiary } from "../../api/axios";
 import { EFFECT_MODE, SCRIPT_MODE } from "../../constants";
+import StyledLoadingSpinner from "../shared/StyledLoadingSpinner";
 import StyledButton from "../shared/StyledButton";
 import ErrorModal from "../common/ErrorModal";
 import DiaryDetailAudio from "./DiaryDetailAudio";
@@ -13,6 +14,7 @@ function DiaryDetail() {
 
   const [mode, setMode] = useState(EFFECT_MODE);
   const [diary, setDiary] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
@@ -21,6 +23,7 @@ function DiaryDetail() {
         const diary = await getDiary(diary_id);
 
         setDiary(diary);
+        setIsLoading(false);
       } catch (err) {
         setErrorMessage(err.message);
       }
@@ -47,7 +50,12 @@ function DiaryDetail() {
             Script Mode
           </ScriptModeBtn>
         </ModeWrapper>
-        <DiaryDetailAudio mode={mode} diary={diary} />
+        {isLoading && (
+          <LoadingWrapper>
+            <StyledLoadingSpinner />
+          </LoadingWrapper>
+        )}
+        {!isLoading && <DiaryDetailAudio mode={mode} diary={diary} />}
       </Container>
     </>
   );
@@ -70,6 +78,12 @@ const ScriptModeBtn = styled(StyledButton)`
   padding: 1.5rem 3.5rem;
   margin-left: 1.5rem;
   border: 1px solid ${({ theme }) => theme.colors.orange};
+`;
+
+const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
 `;
 
 export default DiaryDetail;

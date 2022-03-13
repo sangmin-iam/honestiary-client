@@ -11,6 +11,7 @@ import { DATE_FORMAT, SENTIMENT } from "../../constants";
 import StyledButton from "../shared/StyledButton";
 import StyledSelect from "../shared/StyledSelect";
 import "react-datepicker/dist/react-datepicker.css";
+import "../../assets/stylesheets/react-custom-datepicker.css";
 
 function DiarySearch() {
   const dispatch = useDispatch();

@@ -1,0 +1,23 @@
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range {
+  border-radius: 50%;
+  background-color: #23c1c9;
+}
+
+.react-datepicker__day--in-range:hover,
+.react-datepicker__day--in-selecting-range:hover,
+.react-datepicker__day--keyboard-selected:hover {
+  border-radius: 50%;
+  background-color: #23c1c9;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: #23c1c9;
+  border-radius: 50%;
+}
+
+.react-datepicker__day--in-selecting-range:not(.react-datepicker__day--in-range) {
+  border-radius: 50%;
+  background-color: #23c1c9;
+}
