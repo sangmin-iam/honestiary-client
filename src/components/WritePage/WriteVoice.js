@@ -76,7 +76,7 @@ function Voice({ mode }) {
       {errorMessage && (
         <ErrorModal message={errorMessage} onClick={setErrorMessage} />
       )}
-      <Container>
+      <section>
         <ContentWrapper>
           <Canvas
             ref={canvasRef}
@@ -96,12 +96,10 @@ function Voice({ mode }) {
             <VscCloudUpload className="save-icon" onClick={handleUpload} />
           )}
         </ControllerWrapper>
-      </Container>
+      </section>
     </>
   );
 }
-
-const Container = styled.section``;
 
 const ContentWrapper = styled.div`
   width: 50%;

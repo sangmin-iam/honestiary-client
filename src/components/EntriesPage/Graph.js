@@ -106,7 +106,7 @@ function Graph({ searchOptions, diaries }) {
           .style("stroke", "black")
           .attr("r", CIRCLE_SIZE + 4);
 
-        tooltip.transition().duration(200).style("opacity", 0.9);
+        tooltip.transition().duration(250).style("opacity", 0.9);
       }
 
       function onMouseMoveCircle(e, d) {
