@@ -6,8 +6,10 @@ import * as d3 from "d3";
 
 import useD3 from "../../hooks/useD3";
 
+const isSmallScreen = window.innerWidth <= 1024;
+
 const WIDTH = 1500;
-const HEIGHT = 750;
+const HEIGHT = isSmallScreen ? 500 : 700;
 const CIRCLE_SIZE = 20;
 
 function Graph({ searchOptions, diaries }) {
