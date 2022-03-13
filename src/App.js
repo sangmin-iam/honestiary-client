@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import styled from "styled-components";
 
 import Write from "./components/WritePage/Write";
 import Entries from "./components/EntriesPage/Entries";
@@ -16,7 +17,7 @@ function App() {
   return (
     <>
       <Header />
-      <main>
+      <Main>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route element={<ProtectedRoute />}>
@@ -31,9 +32,13 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
-      </main>
+      </Main>
     </>
   );
 }
+
+const Main = styled.main`
+  margin-bottom: 3rem;
+`;
 
 export default App;
