@@ -63,14 +63,14 @@ function DiarySearch() {
         minDate={startDate}
         maxDate={addMonths(new Date(startDate), 3)}
       />
-      <ScoreButton
+      <ScoreSelect
         onChange={(e) => setSentiment(e.target.value)}
         value={sentiment}
       >
         <option value={SENTIMENT.ALL}>ALL</option>
         <option value={SENTIMENT.POSITIVE}>Positive</option>
         <option value={SENTIMENT.NEGATIVE}>Negative</option>
-      </ScoreButton>
+      </ScoreSelect>
       <SearchIconWrapper onClick={handleSearch}>
         <AiOutlineSearch />
       </SearchIconWrapper>
@@ -96,22 +96,46 @@ const Container = styled.div`
 
 const DateButton = styled(StyledButton)`
   width: 12rem;
-  margin-right: 2rem;
+  margin-right: 2em;
+  font-size: 1.4rem;
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    width: 11rem;
+    margin-right: 1.75em;
+    font-size: 1.3rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    width: 10rem;
+    margin-right: 1.5em;
+    font-size: 1.2rem;
+  }
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
     width: auto;
-    margin-right: 1rem;
+    margin-right: 1.5rem;
     font-size: 1.3rem;
   }
 `;
 
-const ScoreButton = styled(StyledSelect)`
+const ScoreSelect = styled(StyledSelect)`
   width: 12rem;
-  margin-right: 2rem;
+  margin-right: 2em;
+  font-size: 1.4rem;
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    width: 11rem;
+    font-size: 1.3rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    width: 10rem;
+    font-size: 1.2rem;
+  }
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
     width: auto;
-    margin-right: 1rem;
+    margin-right: 1.5em;
     font-size: 1.3rem;
   }
 `;
@@ -122,7 +146,16 @@ const SearchIconWrapper = styled.div`
   font-size: 2.5rem;
   cursor: pointer;
 
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    font-size: 2.3rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    font-size: 2.1rem;
+  }
+
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
+    font-size: 2rem;
     width: auto;
   }
 `;

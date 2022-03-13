@@ -33,6 +33,18 @@ const TabWrapper = styled.div`
   justify-content: space-between;
   font-size: 4rem;
 
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    font-size: 3.8rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    font-size: 3.6rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
+    font-size: 3.5rem;
+  }
+
   div {
     margin: 1rem;
     cursor: pointer;
