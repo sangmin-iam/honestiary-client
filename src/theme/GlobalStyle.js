@@ -4,11 +4,11 @@ const GlobalStyle = createGlobalStyle`
   :root {
     font-size: 62.5%;
 
-    @media only screen and (max-width: ${({ theme }) => theme.devices.laptopL}){
+    @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}){
       font-size: 59.5%;
     }
 
-    @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}){
+    @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}){
       font-size: 56.25%;
     }
 
@@ -27,6 +27,19 @@ const GlobalStyle = createGlobalStyle`
     font-family: "Rambla", sans-serif;
     line-height: 1.5;
     background-color: ${({ theme }) => theme.colors.offWhite};
+    font-size: 2rem;
+
+    @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}){
+      font-size: 1.9rem;
+    }
+
+    @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}){
+      font-size: 1.8rem;
+    }
+
+    @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}){
+      font-size: 1.7rem;
+    }
   }
 
   h1 {
@@ -80,25 +93,10 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-  p {
-    font-size: 2rem;
-
-    @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}){
-      font-size: 1.9rem;
-    }
-
-    @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}){
-      font-size: 1.8rem;
-    }
-
-    @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}){
-      font-size: 1.7rem;
-    }
-  }
-
   img {
     max-width: 100%;
     -webkit-user-drag: none;
+
   }
 
   ul {
