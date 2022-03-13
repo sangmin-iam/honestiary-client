@@ -14,6 +14,8 @@ function DiaryDetailAudio({ mode, diary }) {
   const [script, setScript] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  console.log(diary);
+
   useEffect(() => {
     if (mode === SCRIPT_MODE) {
       setScript(diary.script);
@@ -25,7 +27,7 @@ function DiaryDetailAudio({ mode, diary }) {
       {errorMessage && (
         <ErrorModal message={errorMessage} onClick={setErrorMessage} />
       )}
-      <Container>
+      <section>
         <ContentWrapper>
           <Canvas
             ref={canvasRef}
@@ -42,14 +44,10 @@ function DiaryDetailAudio({ mode, diary }) {
             onStop={stopDrawingAudio}
           />
         </ControllerWrapper>
-      </Container>
+      </section>
     </>
   );
 }
-
-const Container = styled.section`
-  min-height: 60rem;
-`;
 
 const ContentWrapper = styled.div`
   width: 50%;
@@ -69,6 +67,14 @@ const Canvas = styled.canvas`
   width: 100%;
   height: 50rem;
 
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    height: 40rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    height: 35rem;
+  }
+
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
     height: 40rem;
   }
@@ -81,6 +87,16 @@ const Script = styled.div`
   overflow-y: scroll;
   font-family: "Waiting for the Sunrise", cursive;
   font-size: 2.5rem;
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    font-size: 2.25rem;
+    height: 40rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    font-size: 2rem;
+    height: 35rem;
+  }
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
     height: 40rem;
@@ -116,7 +132,14 @@ const ControllerWrapper = styled.div`
 
 DiaryDetailAudio.propTypes = {
   mode: PropTypes.string,
-  diary: PropTypes.object,
+  diary: PropTypes.shape({
+    audio: PropTypes.string,
+    createdAt: PropTypes.string,
+    createdBy: PropTypes.string,
+    script: PropTypes.string,
+    sentiment: PropTypes.number,
+    _id: PropTypes.string,
+  }),
 };
 
 export default DiaryDetailAudio;

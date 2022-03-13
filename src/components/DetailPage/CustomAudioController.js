@@ -3,7 +3,7 @@ import { FaPlay, FaPause } from "react-icons/fa";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import { convertSecondsToMinutesSeconds } from "../../utils";
+import { convertSecondsToMinutesSeconds } from "../../utils/date";
 
 function CustomAudioController({ audioElementRef, src, onStart, onStop }) {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -125,20 +125,33 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80%;
+  width: 75%;
+  min-width: 65rem;
 `;
 
 const PlayPauseWrapper = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 2.75em;
+  height: 2.75em;
   border: none;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.orange};
   color: ${({ theme }) => theme.colors.white};
   font-size: 1.5rem;
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    font-size: 1.3rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    font-size: 1.2rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
+    font-size: 1.1rem;
+  }
 `;
 
 const ProgressBarWrapper = styled.div`

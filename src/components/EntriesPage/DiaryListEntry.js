@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 import { deleteDiary } from "../../api/axios";
+import { makeEmojiBasedOnSentimenScore } from "../../utils/diary";
 import { DATE_FORMAT } from "../../constants";
 import DeleteModal from "../common/DeleteModal";
 import StyledButton from "../shared/StyledButton";
@@ -32,26 +33,6 @@ function DiaryListEntry({
     } catch (err) {
       setErrorMessage(err.message);
     }
-  }
-
-  function renderEmojiBasedOnSentimenScore(sentiment) {
-    let emoji;
-
-    if (sentiment >= 71) {
-      emoji = "😃";
-    } else if (sentiment <= 70 && sentiment >= 41) {
-      emoji = "😊";
-    } else if (sentiment <= 40 && sentiment >= 0) {
-      emoji = "🙂";
-    } else if (sentiment <= -1 && sentiment >= -40) {
-      emoji = "🙁";
-    } else if (sentiment <= -41 && sentiment >= -70) {
-      emoji = "😢";
-    } else if (sentiment <= -71) {
-      emoji = "😭";
-    }
-
-    return <div>{emoji}</div>;
   }
 
   return (
@@ -82,9 +63,7 @@ function DiaryListEntry({
         <DateWrapper>
           {format(new Date(createdAt), DATE_FORMAT.YYYY_MM_DD)}
         </DateWrapper>
-        <EmojiWrapper>
-          {renderEmojiBasedOnSentimenScore(sentiment)}
-        </EmojiWrapper>
+        <EmojiWrapper>{makeEmojiBasedOnSentimenScore(sentiment)}</EmojiWrapper>
       </Container>
     </>
   );
