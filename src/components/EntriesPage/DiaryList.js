@@ -67,13 +67,14 @@ function DiaryList() {
         <ErrorModal message={errorMessage} onClick={setErrorMessage} />
       )}
       <ListWrapper>
-        {diaries.map(({ script, createdAt, _id }) => {
+        {diaries.map(({ _id, script, createdAt, sentiment }) => {
           return (
             <DiaryListEntry
-              script={script}
-              createdAt={createdAt}
               id={_id}
               key={_id}
+              script={script}
+              createdAt={createdAt}
+              sentiment={sentiment}
               setDiaries={setDiaries}
               setErrorMessage={setErrorMessage}
             />
@@ -95,8 +96,7 @@ const ListWrapper = styled.div`
   grid-template-columns: repeat(4, minmax(25rem, 1fr));
   grid-gap: 3rem;
   width: 80%;
-  margin: 0 auto;
-  margin-top: 3rem;
+  margin: 3rem auto;
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
     grid-template-columns: repeat(3, minmax(20rem, 1fr));

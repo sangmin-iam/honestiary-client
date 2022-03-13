@@ -13,9 +13,10 @@ const HEADING = "Your are about to delete a diary";
 const MESSAGE = "Are you sure you want to delete it?";
 
 function DiaryListEntry({
+  id,
   script,
   createdAt,
-  id,
+  sentiment,
   setDiaries,
   setErrorMessage,
 }) {
@@ -31,6 +32,26 @@ function DiaryListEntry({
     } catch (err) {
       setErrorMessage(err.message);
     }
+  }
+
+  function renderEmojiBasedOnSentimenScore(sentiment) {
+    let emoji;
+
+    if (sentiment >= 71) {
+      emoji = "😃";
+    } else if (sentiment <= 70 && sentiment >= 41) {
+      emoji = "😊";
+    } else if (sentiment <= 40 && sentiment >= 0) {
+      emoji = "🙂";
+    } else if (sentiment <= -1 && sentiment >= -40) {
+      emoji = "🙁";
+    } else if (sentiment <= -41 && sentiment >= -70) {
+      emoji = "😢";
+    } else if (sentiment <= -71) {
+      emoji = "😭";
+    }
+
+    return <div>{emoji}</div>;
   }
 
   return (
@@ -61,6 +82,9 @@ function DiaryListEntry({
         <DateWrapper>
           {format(new Date(createdAt), DATE_FORMAT.YYYY_MM_DD)}
         </DateWrapper>
+        <EmojiWrapper>
+          {renderEmojiBasedOnSentimenScore(sentiment)}
+        </EmojiWrapper>
       </Container>
     </>
   );
@@ -83,8 +107,29 @@ const Container = styled.div`
   padding: 3rem;
   border-radius: 1rem;
   box-shadow: 1px 1px 5px 0.5px rgba(0, 0, 0, 0.2);
-  font-size: 2rem;
+  font-size: 1.9rem;
   cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-6px);
+  }
+
+  &:active {
+    transform: translateY(-3px);
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    font-size: 1.8rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    font-size: 1.7rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
+    font-size: 1.65rem;
+  }
 `;
 
 const ScriptWrapper = styled.div`
@@ -117,12 +162,44 @@ const DeleteWrapper = styled.div`
   font-size: 1.5rem;
   right: -10px;
   top: -10px;
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    font-size: 1.4rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    font-size: 1.3rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
+    font-size: 1.4rem;
+  }
+`;
+
+const EmojiWrapper = styled.div`
+  position: absolute;
+  left: 1.5rem;
+  bottom: 0.5rem;
+  font-size: 3rem;
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    font-size: 2.8rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    font-size: 2.7rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
+    font-size: 2.6rem;
+  }
 `;
 
 DiaryListEntry.propTypes = {
+  id: PropTypes.string,
   script: PropTypes.string,
   createdAt: PropTypes.string,
-  id: PropTypes.string,
+  sentiment: PropTypes.number,
   setDiaries: PropTypes.func,
   setErrorMessage: PropTypes.func,
 };
