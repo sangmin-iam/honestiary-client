@@ -16,7 +16,7 @@ import useVoiceVisualization from "./useVoiceVisualization";
 const SUCCESS_MODAL_HEADING = "Great!";
 const SUCCESS_MODAL_MESSAGE = "Your diary is uploaded successfully!";
 
-function Voice({ mode }) {
+function WriteVoice({ mode }) {
   const navigate = useNavigate();
 
   const { script, startSpeechRecognition, stopSpeechRecognition } =
@@ -88,9 +88,17 @@ function Voice({ mode }) {
         </ContentWrapper>
         <ControllerWrapper>
           {isRecording ? (
-            <CgPlayStopO className="stop-icon" onClick={handleStop} />
+            <CgPlayStopO
+              className="stop-icon"
+              data-testid="stop-icon"
+              onClick={handleStop}
+            />
           ) : (
-            <CgRecord className="start-icon" onClick={handleStart} />
+            <CgRecord
+              className="start-icon"
+              data-testid="start-icon"
+              onClick={handleStart}
+            />
           )}
           {isRecorded && (
             <VscCloudUpload className="save-icon" onClick={handleUpload} />
@@ -206,8 +214,8 @@ const ModalButtonWrapper = styled.div`
   margin-bottom: 2rem;
 `;
 
-Voice.propTypes = {
+WriteVoice.propTypes = {
   mode: PropTypes.string,
 };
 
-export default Voice;
+export default WriteVoice;

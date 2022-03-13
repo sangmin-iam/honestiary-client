@@ -5,7 +5,10 @@ import styled from "styled-components";
 function Modal({ onClick, width, height, padding, children }) {
   return ReactDOM.createPortal(
     <>
-      <OverlayWrapper onClick={() => onClick((prev) => !prev)} />
+      <OverlayWrapper
+        onClick={() => onClick((prev) => !prev)}
+        data-testid="overlay"
+      />
       <ModalWrapper width={width} height={height} padding={padding}>
         {children}
       </ModalWrapper>

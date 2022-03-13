@@ -10,8 +10,8 @@ function SuccessModal({ onClick, heading, message, children }) {
       <Success>
         <AiOutlineCheckCircle className="success-icon" />
       </Success>
-      <SuccessHeader>{heading}</SuccessHeader>
-      <SuccessMessage>{message}</SuccessMessage>
+      <SuccessHeader>{heading || "Great"}</SuccessHeader>
+      <SuccessMessage>{message || "Successfully Done!"}</SuccessMessage>
       {children}
     </Modal>
   );

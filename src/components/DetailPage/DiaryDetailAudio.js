@@ -30,6 +30,7 @@ function DiaryDetailAudio({ mode, diary }) {
           <Canvas
             ref={canvasRef}
             mode={mode === EFFECT_MODE ? "block" : "none"}
+            data-testid="canvas"
           />
           <Script mode={mode === SCRIPT_MODE ? "block" : "none"}>
             {script}
