@@ -16,7 +16,7 @@ function Home() {
           <Paragraph>{paragraph}</Paragraph>
         </ParagraphWrapper>
         <ButtonWrapper>
-          <Button primary onClick={() => navigate("/login")}>
+          <Button primary onClick={() => navigate("/getting-started")}>
             Getting Started
           </Button>
         </ButtonWrapper>

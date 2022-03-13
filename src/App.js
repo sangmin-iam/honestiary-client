@@ -5,6 +5,7 @@ import Entries from "./components/EntriesPage/Entries";
 import DiaryList from "./components/EntriesPage/DiaryList";
 import DiaryGraph from "./components/EntriesPage/DiaryGraph";
 import DiaryDetail from "./components/DetailPage/DiaryDetail";
+import GettingStarted from "./components/GettingStartedPage/GettingStarted";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./components/NotFound";
 import Login from "./components/Login";
@@ -26,6 +27,7 @@ function App() {
             </Route>
             <Route path="/entries/:diary_id" element={<DiaryDetail />} />
           </Route>
+          <Route path="/getting-started" element={<GettingStarted />} />
           <Route path="/login" element={<Login />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
