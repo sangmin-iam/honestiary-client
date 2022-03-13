@@ -82,6 +82,8 @@ const Container = styled.header`
 
   .logo {
     height: 100%;
+    margin-left: 1rem;
+    margin-top: 1rem;
 
     img {
       height: 10vh;
@@ -134,6 +136,16 @@ const Container = styled.header`
 
     li {
       margin-right: 7rem;
+    }
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    ul {
+      font-size: 1.85rem;
+    }
+
+    li {
+      margin-right: 6rem;
     }
   }
 
