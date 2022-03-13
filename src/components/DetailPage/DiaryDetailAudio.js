@@ -9,12 +9,10 @@ import useAudioVisualization from "./useAudioVisualization";
 
 function DiaryDetailAudio({ mode, diary }) {
   const { canvasRef, audioElementRef, startDrawingAudio, stopDrawingAudio } =
-    useAudioVisualization({ audioURL: diary?.audio });
+    useAudioVisualization({ audioURL: diary.audioURL });
 
   const [script, setScript] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
-  console.log(diary);
 
   useEffect(() => {
     if (mode === SCRIPT_MODE) {
@@ -133,7 +131,7 @@ const ControllerWrapper = styled.div`
 DiaryDetailAudio.propTypes = {
   mode: PropTypes.string,
   diary: PropTypes.shape({
-    audio: PropTypes.string,
+    audioURL: PropTypes.string,
     createdAt: PropTypes.string,
     createdBy: PropTypes.string,
     script: PropTypes.string,
