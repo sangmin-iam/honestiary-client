@@ -21,35 +21,35 @@ function GettingStarted() {
     navigate("/write");
   }
 
+  function renderStepCard(num, image, paragraph) {
+    return (
+      <ContentWrapper>
+        <NumberWrapper>{num}</NumberWrapper>
+        <ImageWrapper>
+          <img src={image} />
+        </ImageWrapper>
+        <Paragraph>{paragraph}</Paragraph>
+      </ContentWrapper>
+    );
+  }
+
   return (
     <Container>
       <HeaderWrapper>
         <h2>Get Started</h2>
       </HeaderWrapper>
       <ContentContainer>
-        <ContentWrapper>
-          <NumberWrapper>1</NumberWrapper>
-          <ImageWrapper>
-            <img src={voiceImage} />
-          </ImageWrapper>
-          <Paragraph>Write your diary with your voice.</Paragraph>
-        </ContentWrapper>
-        <ContentWrapper>
-          <NumberWrapper>2</NumberWrapper>
-          <ImageWrapper>
-            <img src={analysisImage} />
-          </ImageWrapper>
-          <Paragraph>
-            Your diary will be scored by sentiment analysis.
-          </Paragraph>
-        </ContentWrapper>
-        <ContentWrapper>
-          <NumberWrapper>3</NumberWrapper>
-          <ImageWrapper>
-            <img src={graphImage} />
-          </ImageWrapper>
-          <Paragraph>Check out your diary in timeline graph.</Paragraph>
-        </ContentWrapper>
+        {renderStepCard(1, voiceImage, "Write your diary with your voice.")}
+        {renderStepCard(
+          2,
+          analysisImage,
+          "Your diary will be scored by sentiment analysis."
+        )}
+        {renderStepCard(
+          3,
+          graphImage,
+          "Check out your diary in timeline graph."
+        )}
       </ContentContainer>
       <ButtonWrapper>
         <StyledButton primary onClick={handleClick}>

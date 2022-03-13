@@ -24,7 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "pre-commit": "lint-staged"
@@ -64,5 +64,10 @@
       "prettier --write"
     ]
   },
-  "author": "Sangmin Na"
+  "author": "Sangmin Na",
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/(?!d3|d3-array|internmap|delaunator|robust-predicates)"
+    ]
+  }
 }

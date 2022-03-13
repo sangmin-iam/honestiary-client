@@ -67,7 +67,7 @@ function Graph({ searchOptions, diaries }) {
           return yScale(d.sentiment);
         })
         .attr("fill", function (d) {
-          const currentHeightOfCircle = this.cy.baseVal.value;
+          const currentHeightOfCircle = this.cy?.baseVal.value;
           const middleHeight = GRAPH_HEIGHT / 2;
           const distanceFromMiddleHeight = middleHeight - currentHeightOfCircle;
           const proportion = 255 / middleHeight;
