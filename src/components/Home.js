@@ -80,7 +80,7 @@ const Button = styled(StyledButton)`
   font-size: 1.8rem;
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
-    font-size: 1.75rem;
+    font-size: 1.6rem;
   }
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {

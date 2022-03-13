@@ -9,6 +9,7 @@ import StyledButton from "../shared/StyledButton";
 
 function GettingStarted() {
   const navigate = useNavigate();
+
   const isLoggedIn = useSelector(({ user }) => user.isLoggedIn);
 
   function handleClick() {
@@ -63,15 +64,20 @@ const Container = styled.div`
   width: 60%;
   min-width: 100rem;
   margin: 0 auto;
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 3rem;
+  }
 `;
 
 const HeaderWrapper = styled.div`
   margin-top: 10vh;
-  font-family: "Wingsong";
   text-align: center;
 
-  h1 {
-    font-size: 3.5rem;
+  @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
+    margin-top: 5vh;
   }
 `;
 
@@ -79,13 +85,19 @@ const ContentContainer = styled.div`
   display: flex;
   justify-content: space-around;
   margin-top: 8vh;
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
+    flex-direction: column;
+    align-items: center;
+    gap: 5rem;
+  }
 `;
 
 const ContentWrapper = styled.div`
   position: relative;
   width: 28%;
-  min-width: 27rem;
-  padding-top: max(28%, 27rem);
+  min-width: 31.5rem;
+  padding-top: max(28%, 31.5rem);
   border-radius: 5px;
   box-shadow: 1px 1px 5px 0.5px rgba(0, 0, 0, 0.2);
 `;
@@ -106,15 +118,16 @@ const NumberWrapper = styled.div`
 const ImageWrapper = styled.div`
   position: absolute;
   margin-bottom: 2rem;
-  top: 45px;
+  top: 4rem;
 `;
 
 const Paragraph = styled.p`
   position: absolute;
+  left: 50%;
   bottom: 7%;
-  font-size: 1.8rem;
+  transform: translateX(-50%);
   text-align: center;
-  width: 100%;
+  width: 90%;
 `;
 
 const ButtonWrapper = styled.div`

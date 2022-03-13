@@ -25,7 +25,10 @@ function Header() {
           <span className="bar"></span>
           <span className="bar"></span>
         </a>
-        <ul className={`${isOpen && "open"}`}>
+        <ul
+          className={`${isOpen && "open"}`}
+          onClick={() => setIsOpen((toggle) => !toggle)}
+        >
           <li>
             <NavLink
               to="/"
