@@ -101,9 +101,7 @@ function Voice({ mode }) {
   );
 }
 
-const Container = styled.section`
-  min-height: 60rem;
-`;
+const Container = styled.section``;
 
 const ContentWrapper = styled.div`
   width: 50%;
@@ -114,7 +112,7 @@ const ContentWrapper = styled.div`
   box-shadow: 1px 1px 5px 0.5px rgba(0, 0, 0, 0.2);
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
-    width: 80%;
+    width: 90%;
   }
 `;
 
@@ -122,6 +120,14 @@ const Canvas = styled.canvas`
   display: ${({ mode }) => mode};
   width: 100%;
   height: 50rem;
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    height: 40rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    height: 35rem;
+  }
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
     height: 40rem;
@@ -135,6 +141,16 @@ const Script = styled.div`
   overflow-y: scroll;
   font-family: "Waiting for the Sunrise", cursive;
   font-size: 2.5rem;
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    font-size: 2.25rem;
+    height: 40rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    font-size: 2rem;
+    height: 35rem;
+  }
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
     height: 40rem;
@@ -160,9 +176,30 @@ const ControllerWrapper = styled.div`
     cursor: pointer;
   }
 
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    .start-icon,
+    .stop-icon,
+    .save-icon {
+      font-size: 4.5rem;
+    }
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    .start-icon,
+    .stop-icon,
+    .save-icon {
+      font-size: 4.25rem;
+    }
+  }
+
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
-    width: 80%;
-    height: 70%;
+    width: 90%;
+
+    .start-icon,
+    .stop-icon,
+    .save-icon {
+      font-size: 4rem;
+    }
   }
 `;
 

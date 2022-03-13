@@ -24,7 +24,7 @@ function GettingStarted() {
   return (
     <Container>
       <HeaderWrapper>
-        <h1>Get Started</h1>
+        <h2>Get Started</h2>
       </HeaderWrapper>
       <ContentContainer>
         <ContentWrapper>

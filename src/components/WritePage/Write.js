@@ -31,21 +31,36 @@ function Write() {
 
 const Container = styled.div`
   padding-top: 5rem;
+  margin-bottom: 3rem;
 `;
 
 const ModeWrapper = styled.div`
   text-align: center;
 `;
 
-const EffectModeBtn = styled(StyledButton)`
-  padding: 1.5rem 3.5rem;
-  margin-right: 1.5rem;
+const ModeButtons = styled(StyledButton)`
+  padding: 1em 2em;
+  font-size: 1.5rem;
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
+    font-size: 1.4rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    font-size: 1.3rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
+    font-size: 1.2rem;
+  }
 `;
 
-const ScriptModeBtn = styled(StyledButton)`
-  padding: 1.5rem 3.5rem;
-  margin-left: 1.5rem;
-  border: 1px solid ${({ theme }) => theme.colors.orange};
+const EffectModeBtn = styled(ModeButtons)`
+  margin-right: 1.2em;
+`;
+
+const ScriptModeBtn = styled(ModeButtons)`
+  margin-left: 1.2em;
 `;
 
 export default Write;
