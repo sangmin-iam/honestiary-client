@@ -69,14 +69,6 @@ const Canvas = styled.canvas`
   @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
     height: 40rem;
   }
-
-  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
-    height: 35rem;
-  }
-
-  @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
-    height: 40rem;
-  }
 `;
 
 const Script = styled.div`
@@ -88,13 +80,13 @@ const Script = styled.div`
   font-size: 2.5rem;
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
-    font-size: 2.25rem;
     height: 40rem;
+    font-size: 2.25rem;
   }
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
-    font-size: 2rem;
     height: 35rem;
+    font-size: 2rem;
   }
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
