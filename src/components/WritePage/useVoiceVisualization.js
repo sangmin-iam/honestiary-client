@@ -38,34 +38,49 @@ function useVoiceVisualization() {
     const bufferLength = analyzer.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
 
-    canvasRef.current.width = 800;
-    canvasRef.current.height = 400;
+    canvasRef.current.width = window.innerWidth;
+    canvasRef.current.height = window.innerHeight;
 
-    const barWidth = canvasRef.current.width / bufferLength;
-    let barHeight;
-    let x = 0;
+    const isSmallLaptop = window.innerWidth <= 1024;
+
+    if (isSmallLaptop) {
+      canvasRef.current.width = window.innerWidth / 0.7;
+      canvasRef.current.height = window.innerHeight / 0.7;
+    }
 
     canvasContextRef.current = canvasRef.current.getContext("2d");
 
+    let barHeight;
+
     function animate() {
-      x = 0;
+      const ctx = canvasContextRef.current;
+
       clearCanvas();
       analyzer.getByteFrequencyData(dataArray);
 
       for (let i = 0; i < bufferLength; i++) {
-        barHeight = dataArray[i];
-        const red = (i * barHeight) / 20;
-        const green = i * 2;
-        const blue = barHeight / 2;
+        barHeight = dataArray[i] * 1.4;
+        ctx.save();
 
-        canvasContextRef.current.fillStyle = `rgb(${red}, ${green}, ${blue})`;
-        canvasContextRef.current.fillRect(
-          x,
-          canvasRef.current.height - barHeight,
-          barWidth,
-          barHeight
+        ctx.translate(
+          canvasRef.current.width / 2,
+          canvasRef.current.height / 2
         );
-        x += barWidth;
+        ctx.rotate(i * bufferLength * 4);
+
+        const hue = 250 + i * 2;
+        ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+
+        ctx.beginPath();
+        ctx.arc(0, barHeight, barHeight / 15, 0, Math.PI * 2);
+        ctx.arc(0, barHeight, barHeight / 17.5, 0, Math.PI * 2);
+        ctx.arc(0, barHeight, barHeight / 20, 0, Math.PI * 2);
+        ctx.arc(0, barHeight, barHeight / 22.5, 0, Math.PI * 2);
+        ctx.arc(0, barHeight, barHeight / 25, 0, Math.PI * 2);
+        ctx.arc(0, barHeight, barHeight / 30, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
       }
 
       animationFrameRef.current = requestAnimationFrame(animate);
