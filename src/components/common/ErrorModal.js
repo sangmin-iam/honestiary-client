@@ -4,14 +4,17 @@ import styled from "styled-components";
 
 import Modal from "./Modal";
 
+const DEFAULT_HEADING = "Error!";
+const DEFAULT_MESSAGE = "Something went wrong.";
+
 function ErrorModal({ onClick, heading, message, children }) {
   return (
     <Modal width="35rem" padding="0" onClick={onClick}>
       <Error>
         <AiOutlineCloseCircle className="error-icon" />
       </Error>
-      <ErrorHeader>{heading || "Error!"}</ErrorHeader>
-      <ErrorMessage>{message || "Something went wrong."}</ErrorMessage>
+      <ErrorHeader>{heading || DEFAULT_HEADING}</ErrorHeader>
+      <ErrorMessage>{message || DEFAULT_MESSAGE}</ErrorMessage>
       {children}
     </Modal>
   );
@@ -36,11 +39,11 @@ const ErrorHeader = styled.h2`
 `;
 
 const ErrorMessage = styled.p`
-  font-family: "Waiting for the Sunrise", cursive;
-  text-align: center;
-  font-size: 2rem;
-  margin-top: 1rem;
   padding-bottom: 2rem;
+  margin-top: 1rem;
+  font-family: "Waiting for the Sunrise", cursive;
+  font-size: 2rem;
+  text-align: center;
 `;
 
 ErrorModal.defaultProps = {

@@ -4,14 +4,17 @@ import styled from "styled-components";
 
 import Modal from "./Modal";
 
+const DEFAULT_HEADING = "Great";
+const DEFAULT_MESSAGE = "Successfully Done!";
+
 function SuccessModal({ onClick, heading, message, children }) {
   return (
     <Modal onClick={onClick} width="35rem" padding="0">
       <Success>
         <AiOutlineCheckCircle className="success-icon" />
       </Success>
-      <SuccessHeader>{heading || "Great"}</SuccessHeader>
-      <SuccessMessage>{message || "Successfully Done!"}</SuccessMessage>
+      <SuccessHeader>{heading || DEFAULT_HEADING}</SuccessHeader>
+      <SuccessMessage>{message || DEFAULT_MESSAGE}</SuccessMessage>
       {children}
     </Modal>
   );
@@ -36,11 +39,11 @@ const SuccessHeader = styled.h2`
 `;
 
 const SuccessMessage = styled.p`
-  font-family: "Waiting for the Sunrise", cursive;
-  text-align: center;
-  font-size: 2rem;
-  margin-top: 1rem;
   padding-bottom: 2rem;
+  margin-top: 1rem;
+  font-family: "Waiting for the Sunrise", cursive;
+  font-size: 2rem;
+  text-align: center;
 `;
 
 SuccessModal.defaultProps = {
