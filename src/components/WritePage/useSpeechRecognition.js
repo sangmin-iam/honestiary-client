@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 function useSpeechRecognition() {
   const [script, setScript] = useState("");
 
-  const recognitionRef = useRef();
+  const recognitionRef = useRef(null);
 
   const componentWillUnmount = useRef(false);
 

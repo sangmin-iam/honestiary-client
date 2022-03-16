@@ -29,7 +29,7 @@ function WriteVoice({ mode }) {
     startRecording,
     stopRecording,
     uploadRecording,
-  } = useVoiceRecording({ script });
+  } = useVoiceRecording();
 
   const { canvasRef, startDrawing, stopDrawing } = useVoiceVisualization();
 
@@ -51,9 +51,9 @@ function WriteVoice({ mode }) {
     stopSpeechRecognition();
   }
 
-  async function handleUpload() {
+  async function handleUpload(script) {
     try {
-      await uploadRecording();
+      await uploadRecording(script);
     } catch (err) {
       setErrorMessage(err.message);
     }
@@ -101,7 +101,10 @@ function WriteVoice({ mode }) {
             />
           )}
           {isRecorded && (
-            <VscCloudUpload className="save-icon" onClick={handleUpload} />
+            <VscCloudUpload
+              className="save-icon"
+              onClick={() => handleUpload(script)}
+            />
           )}
         </ControllerWrapper>
       </section>
@@ -135,24 +138,29 @@ const Canvas = styled.canvas`
 const Script = styled.div`
   display: ${({ mode }) => mode};
   width: 100%;
-  height: 50rem;
-  overflow-y: scroll;
+  min-height: 50rem;
   font-family: "Waiting for the Sunrise", cursive;
-  font-size: 2.5rem;
+  font-size: 2.4rem;
+  line-height: 1.25 !important;
+  background: linear-gradient(transparent, transparent 2.9rem, #ebebeb 0);
+  background-size: 3rem 3rem;
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
-    height: 40rem;
-    font-size: 2.25rem;
+    min-height: 40rem;
+    font-size: 2rem;
+    line-height: 1.5 !important;
   }
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
-    height: 35rem;
+    min-height: 35rem;
     font-size: 2rem;
+    line-height: 1.5 !important;
   }
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
-    height: 40rem;
+    min-height: 40rem;
     font-size: 1.5rem;
+    line-height: 2 !important;
   }
 `;
 

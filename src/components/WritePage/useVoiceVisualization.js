@@ -31,6 +31,7 @@ function useVoiceVisualization() {
       window.webkitAudioContext)();
     const source = audioContext.createMediaStreamSource(stream);
     const analyzer = audioContext.createAnalyser();
+
     analyzer.fftSize = 256;
 
     source.connect(analyzer);
@@ -50,7 +51,7 @@ function useVoiceVisualization() {
 
     canvasContextRef.current = canvasRef.current.getContext("2d");
 
-    let barHeight;
+    let distance;
 
     function animate() {
       const ctx = canvasContextRef.current;
@@ -59,7 +60,7 @@ function useVoiceVisualization() {
       analyzer.getByteFrequencyData(dataArray);
 
       for (let i = 0; i < bufferLength; i++) {
-        barHeight = dataArray[i] * 1.4;
+        distance = dataArray[i] * 1.4;
         ctx.save();
 
         ctx.translate(
@@ -72,12 +73,12 @@ function useVoiceVisualization() {
         ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
 
         ctx.beginPath();
-        ctx.arc(0, barHeight, barHeight / 15, 0, Math.PI * 2);
-        ctx.arc(0, barHeight, barHeight / 17.5, 0, Math.PI * 2);
-        ctx.arc(0, barHeight, barHeight / 20, 0, Math.PI * 2);
-        ctx.arc(0, barHeight, barHeight / 22.5, 0, Math.PI * 2);
-        ctx.arc(0, barHeight, barHeight / 25, 0, Math.PI * 2);
-        ctx.arc(0, barHeight, barHeight / 30, 0, Math.PI * 2);
+        ctx.arc(0, distance, distance / 15, 0, Math.PI * 2);
+        ctx.arc(0, distance, distance / 17.5, 0, Math.PI * 2);
+        ctx.arc(0, distance, distance / 20, 0, Math.PI * 2);
+        ctx.arc(0, distance, distance / 22.5, 0, Math.PI * 2);
+        ctx.arc(0, distance, distance / 25, 0, Math.PI * 2);
+        ctx.arc(0, distance, distance / 30, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.restore();
