@@ -156,7 +156,6 @@ const SearchIconWrapper = styled.div`
 
   @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
     font-size: 2rem;
-    width: auto;
   }
 `;
 
