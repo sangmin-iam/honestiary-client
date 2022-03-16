@@ -133,6 +133,14 @@ const Canvas = styled.canvas`
   @media only screen and (max-width: ${({ theme }) => theme.devices.laptopM}) {
     height: 40rem;
   }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.laptopS}) {
+    height: 35rem;
+  }
+
+  @media only screen and (max-width: ${({ theme }) => theme.devices.mobile}) {
+    height: 40rem;
+  }
 `;
 
 const Script = styled.div`
