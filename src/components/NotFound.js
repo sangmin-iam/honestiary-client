@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import notFoundImage from "../assets/images/notFound.svg";
 import StyledButton from "./shared/StyledButton";
 
+const PARAGRAPH = "Ooops! We can't seem to find the page you're looking for.";
+
 function NotFound() {
   const navigate = useNavigate();
 
@@ -13,9 +15,7 @@ function NotFound() {
         <img src={notFoundImage} />
       </ImageWrapper>
       <ParagraphWrapper>
-        <p>
-          Ooops! We can&apos;t seem to find the page you&apos;re looking for.
-        </p>
+        <p>{PARAGRAPH}</p>
       </ParagraphWrapper>
       <BackHomeButton primary onClick={() => navigate("/")}>
         Back to Home Page
