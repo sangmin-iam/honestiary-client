@@ -193,6 +193,11 @@ const GraphWrapper = styled.div`
   margin-top: 3rem;
   border-radius: 3px;
   box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.25);
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
 
   .tooltip {
     position: absolute;
