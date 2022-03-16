@@ -4,7 +4,7 @@ import recordingStart from "../../assets/audios/recordingStart.mp3";
 import recordingStop from "../../assets/audios/recordingStop.mp3";
 import { createDiary } from "../../api/axios";
 
-function useVoiceRecording({ script }) {
+function useVoiceRecording() {
   const [isRecording, setIsRecording] = useState(false);
   const [isRecorded, setIsRecorded] = useState(false);
   const [isUploaded, setIsUploaded] = useState(false);
@@ -73,7 +73,7 @@ function useVoiceRecording({ script }) {
     setIsRecorded(true);
   }
 
-  async function uploadRecording() {
+  async function uploadRecording(script) {
     const recorded = new File([audioURLRef.current], "mpeg", {
       lastModified: new Date().getTime(),
       type: "audio/mpeg",
