@@ -6,7 +6,7 @@ import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import theme from "../../theme/theme";
-import { DATE_FORMAT } from "../../constants";
+import { DATE_FORMAT } from "../../constants/date";
 import { makeEmojiBasedOnSentimenScore } from "../../utils/diary";
 import DiaryListEntry from "./DiaryListEntry";
 

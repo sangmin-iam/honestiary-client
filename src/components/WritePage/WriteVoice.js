@@ -5,7 +5,7 @@ import { VscCloudUpload } from "react-icons/vsc";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import { EFFECT_MODE, SCRIPT_MODE } from "../../constants";
+import { EFFECT_MODE, SCRIPT_MODE } from "../../constants/diary";
 import SuccessModal from "../common/SuccessModal";
 import ErrorModal from "../common/ErrorModal";
 import StyledButton from "../shared/StyledButton";

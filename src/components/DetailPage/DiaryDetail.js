@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { getDiary } from "../../api/axios";
-import { EFFECT_MODE, SCRIPT_MODE } from "../../constants";
+import { EFFECT_MODE, SCRIPT_MODE } from "../../constants/diary";
 import StyledLoadingSpinner from "../shared/StyledLoadingSpinner";
 import StyledButton from "../shared/StyledButton";
 import ErrorModal from "../common/ErrorModal";

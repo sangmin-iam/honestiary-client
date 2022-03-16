@@ -2,7 +2,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { ThemeProvider } from "styled-components";
 
-import { EFFECT_MODE, SCRIPT_MODE } from "../../constants/";
+import { EFFECT_MODE, SCRIPT_MODE } from "../../constants/diary";
 import theme from "../../theme/theme";
 import DiaryDetailAudio from "./DiaryDetailAudio";
 

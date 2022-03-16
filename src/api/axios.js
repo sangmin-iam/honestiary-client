@@ -1,6 +1,6 @@
 import { signInWithPopup } from "firebase/auth";
 
-import { ACCESS_TOKEN, AUTHORIZATION } from "../constants/index";
+import { ACCESS_TOKEN, AUTHORIZATION } from "../constants/auth";
 import auth, { googleAuthProvider } from "../config/firebase";
 import axios from "../config/axios";
 
