@@ -31,16 +31,16 @@ const DeleteIconWrapper = styled.div`
 `;
 
 const DeleteHeader = styled.h2`
-  text-align: center;
   margin-top: 3rem;
+  text-align: center;
 `;
 
 const DeleteMessage = styled.p`
-  font-family: "Waiting for the Sunrise", cursive;
-  text-align: center;
-  font-size: 2rem;
-  margin-top: 1rem;
   padding-bottom: 2rem;
+  margin-top: 1rem;
+  font-family: "Waiting for the Sunrise", cursive;
+  font-size: 2rem;
+  text-align: center;
 `;
 
 DeleteModal.defaultProps = {
