@@ -12,6 +12,10 @@ const WIDTH = 1500;
 const HEIGHT = isSmallScreen ? 500 : 700;
 const CIRCLE_SIZE = 20;
 
+const Y_DOAMIN = [-100, 100];
+const Y_DOMAIN_MIN = Y_DOAMIN[0];
+const Y_DOMAIN_MAX = Y_DOAMIN[1];
+
 function Graph({ searchOptions, diaries }) {
   const navigate = useNavigate();
   const [currentZoomState, setCurrentZoomState] = useState(null);
@@ -56,12 +60,12 @@ function Graph({ searchOptions, diaries }) {
         .attr("r", CIRCLE_SIZE)
         .attr("cx", (d) => xScale(new Date(d.createdAt)))
         .attr("cy", function (d) {
-          if (d.sentiment >= 100) {
-            return yScale(100);
+          if (d.sentiment >= Y_DOMAIN_MAX) {
+            return yScale(Y_DOMAIN_MAX);
           }
 
-          if (d.sentiment <= -100) {
-            return yScale(-100);
+          if (d.sentiment <= Y_DOMAIN_MIN) {
+            return yScale(Y_DOMAIN_MIN);
           }
 
           return yScale(d.sentiment);
