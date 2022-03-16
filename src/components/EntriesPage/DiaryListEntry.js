@@ -23,16 +23,22 @@ function DiaryListEntry({
 }) {
   const navigate = useNavigate();
 
+  const [isMouseOn, setIsMouseOn] = useState(false);
   const [isDeleteModalOn, setIsDeleteModalOn] = useState(false);
 
   async function handleDelete(id) {
     try {
       await deleteDiary(id);
 
-      setDiaries((diaries) => diaries.filter((diary) => diary._id !== id));
+      setDiaries((diaries) => diaries.filter(({ _id }) => _id !== id));
     } catch (err) {
       setErrorMessage(err.message);
     }
+  }
+
+  function handleClickX(e) {
+    e.stopPropagation();
+    setIsDeleteModalOn(true);
   }
 
   return (
@@ -49,16 +55,21 @@ function DiaryListEntry({
           </ModalButtonWrapper>
         </DeleteModal>
       )}
-      <Container id={id} onClick={() => navigate(`/entries/${id}`)}>
+      <Container
+        id={id}
+        onClick={() => navigate(`/entries/${id}`)}
+        onMouseEnter={() => setIsMouseOn(true)}
+        onMouseLeave={() => setIsMouseOn(false)}
+      >
         <DeleteWrapper
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsDeleteModalOn(true);
+          onClick={handleClickX}
+          style={{
+            display: isMouseOn ? "block" : "none",
           }}
         >
           X
         </DeleteWrapper>
-        <ScriptWrapper>{script}</ScriptWrapper>
+        <ScriptWrapper>{script || "No Script"}</ScriptWrapper>
         <TimeWrapper>{format(new Date(createdAt), "p E")}</TimeWrapper>
         <DateWrapper>
           {format(new Date(createdAt), DATE_FORMAT.YYYY_MM_DD)}
@@ -87,8 +98,8 @@ const Container = styled.div`
   border-radius: 1rem;
   box-shadow: 1px 1px 5px 0.5px rgba(0, 0, 0, 0.2);
   font-size: 1.9rem;
-  cursor: pointer;
   transition: transform 0.2s;
+  cursor: pointer;
 
   &:hover {
     transform: translateY(-6px);
@@ -133,10 +144,11 @@ const TimeWrapper = styled(DateWrapper)`
 `;
 
 const DeleteWrapper = styled.div`
+  display: none;
   position: absolute;
   padding: 0.2em 0.6em;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.gray};
+  background-color: ${({ theme }) => theme.colors.blueGreen};
   color: ${({ theme }) => theme.colors.white};
   font-size: 1.5rem;
   right: -10px;
