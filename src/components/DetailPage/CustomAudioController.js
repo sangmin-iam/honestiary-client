@@ -10,8 +10,8 @@ function CustomAudioController({ audioElementRef, src, onStart, onStop }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  const progressBarRef = useRef();
-  const animationRef = useRef();
+  const progressBarRef = useRef(null);
+  const animationRef = useRef(null);
 
   const componentWillUnmount = useRef(false);
 
@@ -109,7 +109,7 @@ function CustomAudioController({ audioElementRef, src, onStart, onStop }) {
           type="range"
           id="progress-bar"
           defaultValue="0"
-          step="0.03"
+          step="0.025"
           ref={progressBarRef}
           onChange={handleChangeRange}
         ></input>
