@@ -6,9 +6,9 @@ import noResultImage from "../../assets/images/noResult.png";
 import { getDiaries } from "../../api/axios";
 import StyledLoadingSpinner from "../shared/StyledLoadingSpinner";
 import ErrorModal from "../common/ErrorModal";
-import Pagination from "./Pagination";
-import DiaryListEntry from "./DiaryListEntry";
 import DiarySearch from "./DiarySearch";
+import DiaryListEntry from "./DiaryListEntry";
+import Pagination from "./Pagination";
 
 function DiaryList() {
   const searchOptions = useSelector(({ diary }) => diary.searchOptions);
@@ -84,7 +84,7 @@ function DiaryList() {
       <Pagination
         page={page}
         pages={pages}
-        changePage={setPage}
+        setPage={setPage}
         setIsLoading={setIsLoading}
       />
     </>
