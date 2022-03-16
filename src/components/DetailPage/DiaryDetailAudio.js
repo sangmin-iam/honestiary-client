@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import { EFFECT_MODE, SCRIPT_MODE } from "../../constants";
+import { EFFECT_MODE, SCRIPT_MODE } from "../../constants/diary";
 import ErrorModal from "../common/ErrorModal";
 import CustomAudioController from "./CustomAudioController";
 import useAudioVisualization from "./useAudioVisualization";

@@ -7,7 +7,8 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 import { search } from "../../features/diarySlice";
-import { DATE_FORMAT, SENTIMENT } from "../../constants";
+import { DATE_FORMAT } from "../../constants/date";
+import { SENTIMENT } from "../../constants/diary";
 import StyledButton from "../shared/StyledButton";
 import StyledSelect from "../shared/StyledSelect";
 import "react-datepicker/dist/react-datepicker.css";

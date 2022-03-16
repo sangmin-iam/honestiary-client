@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { subDays, lightFormat } from "date-fns";
 
-import { DATE_FORMAT, SENTIMENT } from "../constants";
+import { SENTIMENT } from "../constants/diary";
+import { DATE_FORMAT } from "../constants/date";
 
 const initialStartDate = lightFormat(
   subDays(new Date(), 14),

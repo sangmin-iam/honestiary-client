@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import { EFFECT_MODE, SCRIPT_MODE } from "../../constants";
+import { EFFECT_MODE, SCRIPT_MODE } from "../../constants/diary";
 import StyledButton from "../shared/StyledButton";
 import WriteVoice from "./WriteVoice";
 

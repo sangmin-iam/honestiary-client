@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { firebaseGoogleLogin } from "../api/axios";
-import { ACCESS_TOKEN } from "../constants";
+import { ACCESS_TOKEN } from "../constants/auth";
 
 export const login = createAsyncThunk(
   "user/login",

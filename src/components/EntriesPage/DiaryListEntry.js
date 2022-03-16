@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 import { deleteDiary } from "../../api/axios";
 import { makeEmojiBasedOnSentimenScore } from "../../utils/diary";
-import { DATE_FORMAT } from "../../constants";
+import { DATE_FORMAT } from "../../constants/date";
 import DeleteModal from "../common/DeleteModal";
 import StyledButton from "../shared/StyledButton";
 

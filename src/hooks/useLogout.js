@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 
 import axios from "../config/axios";
-import { AUTHORIZATION } from "../constants";
+import { AUTHORIZATION } from "../constants/auth";
 import { logout } from "../features/userSlice";
 
 function useLogout() {
