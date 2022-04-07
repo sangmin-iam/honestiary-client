@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4014a5db-95d0-408c-aa8d-6b73637b1eaf/deploy-status)](https://app.netlify.com/sites/keen-clarke-aac242/deploys)
+
 ## 🗣 Honestiary
 
 음성으로 일기장을 작성하여 텍스트 감정 분석을 통해 그래프로 한 눈에 확인할 수 있는 **Web Application**입니다.
